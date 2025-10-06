@@ -1,0 +1,267 @@
+unit UcadClientes;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.FB,
+  FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Comp.Client, Data.DB,
+  FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Phys.IBBase, Dialogs, Datasnap.DBClient,
+  Datasnap.Provider,Data.Win.ADODB,Uconexao, vcl.Controls, Vcl.DBCtrls,
+  UViaCEP, Vcl.Forms;
+
+type
+  TEndereco_Cliente = record
+    endereco: string;
+    complemento: string;
+    bairro: string;
+    cidade: string;
+    estado: string;
+    UF: string;
+  end;
+  TcadClientes = class
+    private
+      Function ExecutarSQL(SQl: string): Boolean;
+    public
+      FqueryClientes : TFDQuery;
+      FDataSourceCliente : TDataSource;
+      FqueryAux : TFDQuery;
+      FCDS_Aux: TClientDataSet;
+      FDTS_Aux : TDataSource;
+      Endereco_Cliente: TEndereco_Cliente;
+      constructor Create;
+      procedure CarregarDadosClientes;
+      procedure RetornarDadosDoCliente(IdCliente:integer);
+      procedure Persistencia(RegistroNovo: Boolean);
+      procedure Excluir;
+      function BuscarCEP(CEP:String): Boolean;
+      function ObterNomeCidade(Id: String): String;
+  end;
+
+implementation
+
+
+{ TcadClientes }
+
+function TcadClientes.BuscarCEP(CEP:String): Boolean;
+var
+  ViaCEP: TViaCEP;
+  Endereco: TEndereco;
+begin
+  ViaCEP := TViaCEP.Create;
+  try
+    Screen.Cursor := crHourGlass;
+    try
+      Endereco := ViaCEP.BuscarCEP(CEP);
+
+      if not Endereco.Erro then
+      begin
+        //edt_CEP.Text := TValidacoes.FormatarCEP(Endereco.CEP);
+        Endereco_Cliente.endereco := Endereco.Logradouro;
+        Endereco_Cliente.bairro := Endereco.Bairro;
+        Endereco_Cliente.cidade := Endereco.Localidade;
+        Endereco_Cliente.estado := Endereco.Estado;
+        Endereco_Cliente.UF := Endereco.UF;
+        MessageDlg('Endereço encontrado com sucesso!',TMsgDlgType.mtConfirmation,[TMsgDlgBtn.mbOK],0);
+        Result := True;
+      end
+      else
+      begin
+        MessageDlg('Erro ao buscar CEP: ' + Endereco.MensagemErro,TMsgDlgType.mtError,[TMsgDlgBtn.mbOK],0);
+        Result:= False;
+      end;
+    finally
+      Screen.Cursor := crDefault;
+    end;
+  finally
+    ViaCEP.Free;
+  end;
+end;
+
+procedure TcadClientes.CarregarDadosClientes;
+begin
+  FqueryClientes.Close;
+  FqueryClientes.sql.Clear;
+  FqueryClientes.sql.Add('SELECT                   ');
+  FqueryClientes.sql.Add('     CL.NOME,            ');
+  FqueryClientes.sql.Add('     CL.CEP,             ');
+  FqueryClientes.sql.Add('     CL.CPF_CNPJ,        ');
+  FqueryClientes.sql.Add('     CL.ENDERECO,        ');
+  FqueryClientes.sql.Add('     CL.COMPLEMENTO,     ');
+  FqueryClientes.sql.Add('     CL.BAIRRO,          ');
+  FqueryClientes.sql.Add('     CL.CIDADE,          ');
+  FqueryClientes.sql.Add('     CI.NOME,            ');
+  FqueryClientes.sql.Add('     ES.NOME,            ');
+  FqueryClientes.sql.Add('     CL.DATANASCIMENTO   ');
+  FqueryClientes.sql.Add(' FROM                    ');
+  FqueryClientes.sql.Add('    CLIENTE CL           ');
+  FqueryClientes.sql.Add('    JOIN CIDADE CI ON    ');
+  FqueryClientes.sql.Add('     CL.CIDADE = CI.ID   ');
+  FqueryClientes.sql.Add('    JOIN ESTADO ES ON    ');
+  FqueryClientes.sql.Add('     ES.ID = CI.ESTADOID ');
+  FqueryClientes.sql.Add(' ORDER BY CL.NOME        ');
+
+  FqueryClientes.Open;
+end;
+
+constructor TcadClientes.Create;
+var
+  Conexao: Tconecxao;
+begin
+   Conexao := Tconecxao.Create;
+   try
+     FqueryClientes := TFDQuery.Create(nil);
+     FDataSourceCliente := TDataSource.Create(nil);
+     FCDS_Aux := TClientDataSet.Create(nil);
+     FDTS_Aux := TDataSource.Create(nil);
+     FqueryAux := TFDQuery.Create(nil);
+     FqueryAux.Connection := Conexao.Connection;
+     Conexao.CarregarParemtrosDeConexao;
+     FqueryClientes.Connection := Conexao.Connection;
+     FDataSourceCliente.DataSet := FqueryClientes;
+   finally
+     FreeAndNil(Conexao);
+   end;
+
+end;
+
+procedure TcadClientes.Excluir;
+var
+  SQL: string;
+begin
+  SQL := 'DELETE FROM CLIENTE WHERE ID = '+ IntToStr(FCDS_Aux.FieldByName('ID').AsInteger);
+
+  if ExecutarSQL(SQL) then
+  begin
+     MessageDlg('Cliente excluído com sucesso!',TMsgDlgType.mtConfirmation,[TMsgDlgBtn.mbOK],0);
+  end;
+
+end;
+function TcadClientes.ExecutarSQL(Sql: String): Boolean;
+begin
+  Result := False;
+  FqueryClientes.Connection.StartTransaction;
+  try
+    FqueryClientes.SQL.Text := SQL;
+    FqueryClientes.ExecSQL;
+    FqueryClientes.Connection.Commit;
+    Result := True;
+  except
+    on E: Exception do
+    begin
+      FqueryClientes.Connection.Rollback;
+      MessageDlg('Erro ao executar SQL: ' + E.Message,TMsgDlgType.mtError ,[TMsgDlgBtn.mbOK],0);
+      Result := False;
+    end;
+  end;
+end;
+
+
+
+function TcadClientes.ObterNomeCidade(Id: String): String;
+begin
+  FqueryAux.sql.Clear;
+  FqueryAux.Close;
+  FqueryAux.SQL.Add('select                  ');
+  FqueryAux.SQL.Add(' ci.NOME                ');
+  FqueryAux.SQL.Add(' from                   ');
+  FqueryAux.SQL.Add('  cliente cl            ');
+  FqueryAux.SQL.Add('  join cidade ci on     ');
+  FqueryAux.SQL.Add('    cl.CIDADE = ci.ID   ');
+  FqueryAux.SQL.Add('  where                 ');
+  FqueryAux.SQL.Add('   ci.id = '+Id+'       ');
+  FqueryAux.Open;
+
+  Result := FqueryAux.FieldByName('nome').AsString;
+end;
+
+procedure TcadClientes.Persistencia(RegistroNovo: Boolean);
+var
+  SQL: string;
+begin
+
+  FCDS_Aux.Post;
+  if RegistroNovo then
+  begin
+    SQL := 'INSERT INTO CLIENTE VALUES ('+
+     QuotedStr(FCDS_Aux.FieldByName('NOME').ASSTRING)+', '+
+     QuotedStr(FCDS_Aux.FieldByName('CEP').ASSTRING)+', '+
+     QuotedStr(FCDS_Aux.FieldByName('CPF_CNPJ').ASSTRING)+', '+
+     QuotedStr(FCDS_Aux.FieldByName('ENDERECO').ASSTRING)+', '+
+     QuotedStr(FCDS_Aux.FieldByName('NUMERO').ASSTRING)+', '+
+     QuotedStr(FCDS_Aux.FieldByName('COMPLEMENTO').ASSTRING)+', '+
+     QuotedStr(FCDS_Aux.FieldByName('BAIRRO').ASSTRING)+', '+
+     QuotedStr(FCDS_Aux.FieldByName('CIDADE').ASSTRING)+', '+
+     QuotedStr(FCDS_Aux.FieldByName('DATANASCIMENTO').ASSTRING);
+
+
+  end
+  else
+  begin
+    SQL:='UPDATE CLIENTE SET '+
+     'NOME = ' + QuotedStr(FCDS_Aux.FieldByName('NOME').ASSTRING)+', '+
+     'CEP = ' + QuotedStr(FCDS_Aux.FieldByName('CEP').ASSTRING)+', '+
+     'CPF_CNPJ = ' + QuotedStr(FCDS_Aux.FieldByName('CPF_CNPJ').ASSTRING)+', '+
+     'ENDERECO = ' + QuotedStr(FCDS_Aux.FieldByName('ENDERECO').ASSTRING)+', '+
+     'NUMERO = '+ QuotedStr(FCDS_Aux.FieldByName('NUMERO').ASSTRING)+', '+
+     'COMPLEMENTO = '+ QuotedStr(FCDS_Aux.FieldByName('COMPLEMENTO').ASSTRING)+', '+
+     'BAIRRO = '+ QuotedStr(FCDS_Aux.FieldByName('BAIRRO').ASSTRING)+', '+
+     'CIDADE = '+ QuotedStr(FCDS_Aux.FieldByName('CIDADE').ASSTRING)+', '+
+     'DATANASCIMENTO = ' +QuotedStr(FCDS_Aux.FieldByName('DATANASCIMENTO').ASSTRING) +
+     ' WHERE ID = '+ IntToStr(FCDS_Aux.FieldByName('ID').AsInteger);
+  end;
+
+  if ExecutarSQL(SQL) then
+  begin
+    MessageDlg('Dados salvos com sucesso!',TMsgDlgType.mtConfirmation,[TMsgDlgBtn.mbOK],0);
+  end;
+
+end;
+
+procedure TcadClientes.RetornarDadosDoCliente(IdCliente:integer);
+var
+  I: Integer;
+  Field: TField;
+begin
+  FCDS_Aux.Close;
+  FqueryClientes.DisableControls;
+  if IdCliente > 0 then
+  begin
+    FqueryClientes.Filtered := false;
+    FqueryClientes.Filter := 'ID = '+ inttostr(IdCliente);
+    FqueryClientes.Filtered := true;
+  end;
+
+  // 1. Criar estrutura de campos no ClientDataSet
+  FCDS_Aux.FieldDefs.Clear;
+  for I := 0 to FqueryClientes.FieldCount - 1 do
+  begin
+    Field := FqueryClientes.Fields[I];
+    FCDS_Aux.FieldDefs.Add(Field.FieldName, Field.DataType, Field.Size);
+  end;
+
+  // 2. Criar o dataset
+  FCDS_Aux.CreateDataSet;
+
+  // 3. Copiar dados registro por registro
+  FqueryClientes.First;
+  while not FqueryClientes.Eof do
+  begin
+    FCDS_Aux.Append;
+    for I := 0 to FqueryClientes.FieldCount - 1 do
+    begin
+      FCDS_Aux.Fields[I].Value := FqueryClientes.Fields[I].Value;
+    end;
+    FCDS_Aux.Post;
+    FqueryClientes.Next;
+  end;
+
+  FCDS_Aux.First;
+  FDTS_Aux.DataSet := FCDS_Aux;
+  FqueryClientes.Filtered := false;
+  FqueryClientes.EnableControls;
+end;
+
+end.
