@@ -1,14 +1,15 @@
-program Clientes;
+﻿program Clientes;
 
 uses
   Vcl.Forms,
   Principal in 'Principal.pas' {Frmprincipal},
   UcadClientes in 'Controles\UcadClientes.pas',
-  DfmCadClientes in 'Apresenta��o\DfmCadClientes.pas' {FrmcadClientes},
   Uconexao in 'InfraData\Uconexao.pas',
   UValidacoes in 'Funcoes\UValidacoes.pas',
   UViaCEP in 'Funcoes\UViaCEP.pas',
-  UFuncionalidades in 'Funcoes\UFuncionalidades.pas';
+  UFuncionalidades in 'Funcoes\UFuncionalidades.pas',
+  DfmRelClientes in 'Apresentação\DfmRelClientes.pas' {FrmrelClientes},
+  DfmCadClientes in 'Apresentação\DfmCadClientes.pas' {FrmcadClientes};
 
 {$R *.res}
 

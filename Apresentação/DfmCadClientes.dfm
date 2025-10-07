@@ -1,7 +1,6 @@
 object FrmcadClientes: TFrmcadClientes
   Left = 0
   Top = 0
-  BorderIcons = [biSystemMenu]
   Caption = 'Cadastro de Clientes'
   ClientHeight = 704
   ClientWidth = 1041
@@ -18,26 +17,12 @@ object FrmcadClientes: TFrmcadClientes
   OnCreate = FormCreate
   OnShow = FormShow
   TextHeight = 15
-  object Label1: TLabel
-    Left = 24
-    Top = 33
-    Width = 34
-    Height = 15
-    Caption = 'Label1'
-  end
-  object Label2: TLabel
-    Left = 32
-    Top = 41
-    Width = 34
-    Height = 15
-    Caption = 'Label1'
-  end
   object PageControl: TPageControl
     Left = 0
     Top = 0
     Width = 1041
     Height = 663
-    ActivePage = PgCadastro
+    ActivePage = PgPesquisa
     Align = alClient
     TabOrder = 0
     OnChange = PageControlChange
@@ -92,6 +77,7 @@ object FrmcadClientes: TFrmcadClientes
             Top = 32
             Width = 461
             Height = 23
+            Enabled = False
             TabOrder = 0
           end
           object Edt_CPF: TDBEdit
@@ -99,6 +85,7 @@ object FrmcadClientes: TFrmcadClientes
             Top = 80
             Width = 149
             Height = 23
+            Enabled = False
             TabOrder = 1
           end
           object Edt_data_nascimento: TDBEdit
@@ -106,6 +93,7 @@ object FrmcadClientes: TFrmcadClientes
             Top = 80
             Width = 149
             Height = 23
+            Enabled = False
             TabOrder = 2
           end
           object Edt_CEP: TDBEdit
@@ -113,6 +101,7 @@ object FrmcadClientes: TFrmcadClientes
             Top = 128
             Width = 149
             Height = 23
+            Enabled = False
             TabOrder = 3
           end
           object GroupBox2: TGroupBox
@@ -169,6 +158,7 @@ object FrmcadClientes: TFrmcadClientes
               Top = 40
               Width = 465
               Height = 23
+              Enabled = False
               TabOrder = 0
             end
             object Edt_numero: TDBEdit
@@ -176,6 +166,7 @@ object FrmcadClientes: TFrmcadClientes
               Top = 40
               Width = 121
               Height = 23
+              Enabled = False
               TabOrder = 1
             end
             object Edt_complemento: TDBEdit
@@ -183,6 +174,7 @@ object FrmcadClientes: TFrmcadClientes
               Top = 88
               Width = 465
               Height = 23
+              Enabled = False
               TabOrder = 2
             end
             object Edt_Bairro: TDBEdit
@@ -190,6 +182,7 @@ object FrmcadClientes: TFrmcadClientes
               Top = 140
               Width = 235
               Height = 23
+              Enabled = False
               TabOrder = 3
             end
             object Edt_cidade: TDBEdit
@@ -197,6 +190,7 @@ object FrmcadClientes: TFrmcadClientes
               Top = 140
               Width = 209
               Height = 23
+              Enabled = False
               TabOrder = 4
             end
             object Edt_estado: TDBEdit
@@ -204,6 +198,7 @@ object FrmcadClientes: TFrmcadClientes
               Top = 188
               Width = 235
               Height = 23
+              Enabled = False
               TabOrder = 5
             end
           end
@@ -213,6 +208,7 @@ object FrmcadClientes: TFrmcadClientes
             Width = 75
             Height = 23
             Caption = 'Buscar CEP'
+            Enabled = False
             TabOrder = 5
             OnClick = btnBuscarCEPClick
           end
@@ -231,11 +227,11 @@ object FrmcadClientes: TFrmcadClientes
         BevelOuter = bvNone
         TabOrder = 0
         object Gb_periodo: TGroupBox
-          Left = 212
+          Left = 223
           Top = 16
           Width = 200
           Height = 120
-          Caption = 'Per'#237'odo'
+          Caption = 'Data de nascimento'
           TabOrder = 0
           object lblDataInicial: TLabel
             Left = 16
@@ -271,7 +267,7 @@ object FrmcadClientes: TFrmcadClientes
           end
         end
         object Gb_Cidades: TGroupBox
-          Left = 425
+          Left = 432
           Top = 16
           Width = 200
           Height = 56
@@ -295,7 +291,7 @@ object FrmcadClientes: TFrmcadClientes
           end
         end
         object Gb_Estados: TGroupBox
-          Left = 425
+          Left = 432
           Top = 78
           Width = 200
           Height = 58
@@ -312,22 +308,23 @@ object FrmcadClientes: TFrmcadClientes
           end
         end
         object btn_filtrar: TButton
-          Left = 16
+          Left = 12
           Top = 142
           Width = 75
           Height = 25
           Caption = 'Filtrar'
           TabOrder = 3
+          OnClick = btn_filtrarClick
         end
         object Rgb_Filtro: TRadioGroup
-          Left = 16
+          Left = 12
           Top = 16
-          Width = 185
+          Width = 205
           Height = 120
           Caption = 'Tipo de filtro'
           Items.Strings = (
             'Todos os clientes'
-            'Clientes por Per'#237'odo'
+            'Clientes por Data de nascimento'
             'Clientes por Cidade'
             'Clientes por Estado')
           TabOrder = 4

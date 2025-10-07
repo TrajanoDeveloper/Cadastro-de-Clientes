@@ -1,0 +1,121 @@
+unit DfmRelClientes;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls,
+  Vcl.Mask, Vcl.DBCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.UI.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.Phys.FB, FireDAC.Phys.FBDef,
+  FireDAC.VCLUI.Wait, UcadClientes, Datasnap.DBClient, Datasnap.Provider,
+  Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids, UValidacoes, UFuncionalidades;
+
+type
+  TFrmrelClientes = class(TForm)
+    Panel1: TPanel;
+    Btn_novo: TButton;
+    Btn_Salvar: TButton;
+    Panel2: TPanel;
+    GrdClientes: TDBGrid;
+    Rgb_Filtro: TRadioGroup;
+    Gb_periodo: TGroupBox;
+    lblDataInicial: TLabel;
+    lblDataFinal: TLabel;
+    dtpDataInicial: TDateTimePicker;
+    dtpDataFinal: TDateTimePicker;
+    Gb_Cidades: TGroupBox;
+    lblCidade: TLabel;
+    CMB_cidades: TDBLookupComboBox;
+    Gb_Estados: TGroupBox;
+    CMB_Estado: TDBLookupComboBox;
+    btn_filtrar: TButton;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure Rgb_FiltroClick(Sender: TObject);
+  private
+    { Private declarations }
+    FUCadClientes: TcadClientes;
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmrelClientes: TFrmrelClientes;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFrmrelClientes.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  action := TCloseAction.caFree;
+end;
+
+procedure TFrmrelClientes.FormCreate(Sender: TObject);
+begin
+  FUCadClientes := TcadClientes.Create;
+  FUCadClientes.FOpcaoFiltro := 0;
+end;
+
+procedure TFrmrelClientes.FormShow(Sender: TObject);
+begin
+  Rgb_Filtro.ItemIndex := 0;
+  FUCadClientes.CarregarDadosClientes;
+  FUCadClientes.CarregarCidades;
+  FUCadClientes.CarregarEstados;
+  FUCadClientes.RetornarDadosDoCliente(0);
+  GrdClientes.DataSource := FUCadClientes.FDataSourceCliente;
+  CMB_cidades.ListSource := FUCadClientes.FDtsCidades;
+  CMB_Estado.ListSource := FUCadClientes.FDtsEstados;
+end;
+
+procedure TFrmrelClientes.Rgb_FiltroClick(Sender: TObject);
+begin
+  case Rgb_Filtro.ItemIndex of
+   0:
+    begin
+      btn_filtrar.Enabled := False;
+      Gb_periodo.Enabled := False;
+      Gb_Cidades.Enabled := False;
+      Gb_Estados.Enabled := False;
+      CMB_cidades.KeyValue := -1;
+      CMB_Estado.KeyValue := -1;
+      if FUCadClientes.FOpcaoFiltro > 0 then
+      begin
+        FUCadClientes.FOpcaoFiltro := 0;
+        FUCadClientes.AplicarFiltros;
+      end;
+    end;
+   1:
+    begin
+      btn_filtrar.Enabled := True;
+      Gb_periodo.Enabled := True;
+      Gb_Cidades.Enabled := False;
+      Gb_Estados.Enabled := False;
+      CMB_cidades.KeyValue := -1;
+      CMB_Estado.KeyValue := -1;
+    end;
+   2:
+    begin
+      btn_filtrar.Enabled := True;
+      Gb_periodo.Enabled := False;
+      Gb_Cidades.Enabled := True;
+      Gb_Estados.Enabled := False;
+      CMB_Estado.KeyValue := -1;
+    end;
+   3:
+    begin
+      btn_filtrar.Enabled := True;
+      Gb_periodo.Enabled := False;
+      Gb_Cidades.Enabled := False;
+      Gb_Estados.Enabled := True;
+      CMB_cidades.KeyValue := -1;
+    end;
+ end;
+end;
+
+end.

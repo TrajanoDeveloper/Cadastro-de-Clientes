@@ -1,0 +1,30 @@
+unit DfmRelClientes;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs;
+
+type
+  TFrmrelClientes = class(TForm)
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmrelClientes: TFrmrelClientes;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFrmrelClientes.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Close;
+end;
+
+end.

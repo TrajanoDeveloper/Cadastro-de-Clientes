@@ -25,12 +25,6 @@ object Frmprincipal: TFrmprincipal
   object MainMenu1: TMainMenu
     Left = 976
     Top = 584
-    object qssqsq1: TMenuItem
-      Caption = '&Sistema'
-      object dddddd1: TMenuItem
-        Caption = '&configurar Conex'#227'o'
-      end
-    end
     object Cadastro1: TMenuItem
       Caption = 'Cadastro'
       object Clientes1: TMenuItem
@@ -42,6 +36,7 @@ object Frmprincipal: TFrmprincipal
       Caption = 'Relat'#243'rios'
       object RelatriosdeClientes1: TMenuItem
         Caption = '&Relat'#243'rios de Clientes'
+        OnClick = RelatriosdeClientes1Click
       end
     end
     object Ajuda1: TMenuItem
@@ -52,7 +47,6 @@ object Frmprincipal: TFrmprincipal
     end
     object Sair1: TMenuItem
       Caption = 'Sair'
-      OnClick = Sair1Click
     end
   end
 end

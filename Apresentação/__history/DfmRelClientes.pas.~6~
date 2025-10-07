@@ -1,0 +1,48 @@
+unit DfmRelClientes;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Data.DB,
+  Vcl.Grids, Vcl.DBGrids, Vcl.DBCtrls, Vcl.ComCtrls;
+
+type
+  TFrmrelClientes = class(TForm)
+    Panel1: TPanel;
+    Btn_novo: TButton;
+    Btn_Salvar: TButton;
+    Panel2: TPanel;
+    GrdClientes: TDBGrid;
+    Rgb_Filtro: TRadioGroup;
+    Gb_periodo: TGroupBox;
+    lblDataInicial: TLabel;
+    lblDataFinal: TLabel;
+    dtpDataInicial: TDateTimePicker;
+    dtpDataFinal: TDateTimePicker;
+    Gb_Cidades: TGroupBox;
+    lblCidade: TLabel;
+    CMB_cidades: TDBLookupComboBox;
+    Gb_Estados: TGroupBox;
+    CMB_Estado: TDBLookupComboBox;
+    btn_filtrar: TButton;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmrelClientes: TFrmrelClientes;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFrmrelClientes.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  action := TCloseAction.caFree;
+end;
+
+end.

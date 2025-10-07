@@ -1,0 +1,491 @@
+object FrmcadClientes: TFrmcadClientes
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu]
+  Caption = 'Cadastro de Clientes'
+  ClientHeight = 704
+  ClientWidth = 1041
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  FormStyle = fsMDIChild
+  Visible = True
+  WindowState = wsMaximized
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnShow = FormShow
+  TextHeight = 15
+  object Label1: TLabel
+    Left = 24
+    Top = 33
+    Width = 34
+    Height = 15
+    Caption = 'Label1'
+  end
+  object Label2: TLabel
+    Left = 32
+    Top = 41
+    Width = 34
+    Height = 15
+    Caption = 'Label1'
+  end
+  object PageControl: TPageControl
+    Left = 0
+    Top = 0
+    Width = 1041
+    Height = 663
+    ActivePage = PgPesquisa
+    Align = alClient
+    TabOrder = 0
+    OnChange = PageControlChange
+    object PgCadastro: TTabSheet
+      Caption = 'Cadastro'
+      object Panel2: TPanel
+        Left = 0
+        Top = 0
+        Width = 1033
+        Height = 633
+        Align = alClient
+        BevelOuter = bvNone
+        TabOrder = 0
+        object GroupBox1: TGroupBox
+          Left = 0
+          Top = 0
+          Width = 1033
+          Height = 633
+          Align = alClient
+          Caption = 'Dados do Cliente'
+          TabOrder = 0
+          object Lb_nome: TLabel
+            Left = 12
+            Top = 17
+            Width = 33
+            Height = 15
+            Caption = 'Nome'
+          end
+          object Lb_CPF: TLabel
+            Left = 12
+            Top = 65
+            Width = 21
+            Height = 15
+            Caption = 'CPF'
+          end
+          object Lb_CEP: TLabel
+            Left = 12
+            Top = 114
+            Width = 21
+            Height = 15
+            Caption = 'CEP'
+          end
+          object Lb_Datanascimento: TLabel
+            Left = 188
+            Top = 65
+            Width = 105
+            Height = 15
+            Caption = 'Data de nascimento'
+          end
+          object Edt_nome: TDBEdit
+            Left = 12
+            Top = 32
+            Width = 461
+            Height = 23
+            Enabled = False
+            TabOrder = 0
+          end
+          object Edt_CPF: TDBEdit
+            Left = 12
+            Top = 80
+            Width = 149
+            Height = 23
+            Enabled = False
+            TabOrder = 1
+          end
+          object Edt_data_nascimento: TDBEdit
+            Left = 188
+            Top = 80
+            Width = 149
+            Height = 23
+            Enabled = False
+            TabOrder = 2
+          end
+          object Edt_CEP: TDBEdit
+            Left = 12
+            Top = 128
+            Width = 149
+            Height = 23
+            Enabled = False
+            TabOrder = 3
+          end
+          object GroupBox2: TGroupBox
+            Left = 12
+            Top = 176
+            Width = 997
+            Height = 441
+            Caption = 'Endere'#231'o'
+            TabOrder = 4
+            object Label5: TLabel
+              Left = 16
+              Top = 25
+              Width = 49
+              Height = 15
+              Caption = 'Endere'#231'o'
+            end
+            object Lb_numero: TLabel
+              Left = 499
+              Top = 25
+              Width = 44
+              Height = 15
+              Caption = 'N'#250'mero'
+            end
+            object Label7: TLabel
+              Left = 16
+              Top = 74
+              Width = 77
+              Height = 15
+              Caption = 'Complemento'
+            end
+            object Lb_complemento: TLabel
+              Left = 16
+              Top = 127
+              Width = 31
+              Height = 15
+              Caption = 'Bairro'
+            end
+            object Lb_Bairro: TLabel
+              Left = 272
+              Top = 127
+              Width = 37
+              Height = 15
+              Caption = 'Cidade'
+            end
+            object Lb_Estado: TLabel
+              Left = 16
+              Top = 174
+              Width = 35
+              Height = 15
+              Caption = 'Estado'
+            end
+            object Edt_Endereco: TDBEdit
+              Left = 16
+              Top = 40
+              Width = 465
+              Height = 23
+              Enabled = False
+              TabOrder = 0
+            end
+            object Edt_numero: TDBEdit
+              Left = 499
+              Top = 40
+              Width = 121
+              Height = 23
+              Enabled = False
+              TabOrder = 1
+            end
+            object Edt_complemento: TDBEdit
+              Left = 16
+              Top = 88
+              Width = 465
+              Height = 23
+              Enabled = False
+              TabOrder = 2
+            end
+            object Edt_Bairro: TDBEdit
+              Left = 16
+              Top = 140
+              Width = 235
+              Height = 23
+              Enabled = False
+              TabOrder = 3
+            end
+            object Edt_cidade: TDBEdit
+              Left = 272
+              Top = 140
+              Width = 209
+              Height = 23
+              Enabled = False
+              TabOrder = 4
+            end
+            object Edt_estado: TDBEdit
+              Left = 16
+              Top = 188
+              Width = 235
+              Height = 23
+              Enabled = False
+              TabOrder = 5
+            end
+          end
+          object btnBuscarCEP: TButton
+            Left = 188
+            Top = 128
+            Width = 75
+            Height = 23
+            Caption = 'Buscar CEP'
+            Enabled = False
+            TabOrder = 5
+            OnClick = btnBuscarCEPClick
+          end
+        end
+      end
+    end
+    object PgPesquisa: TTabSheet
+      Caption = 'Pesquisa'
+      ImageIndex = 1
+      object Panel3: TPanel
+        Left = 0
+        Top = 0
+        Width = 1033
+        Height = 193
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        object Gb_periodo: TGroupBox
+          Left = 212
+          Top = 16
+          Width = 200
+          Height = 120
+          Caption = 'Per'#237'odo'
+          TabOrder = 0
+          object lblDataInicial: TLabel
+            Left = 16
+            Top = 24
+            Width = 61
+            Height = 15
+            Caption = 'Data Inicial:'
+          end
+          object lblDataFinal: TLabel
+            Left = 16
+            Top = 72
+            Width = 55
+            Height = 15
+            Caption = 'Data Final:'
+          end
+          object dtpDataInicial: TDateTimePicker
+            Left = 16
+            Top = 40
+            Width = 150
+            Height = 21
+            Date = 44897.000000000000000000
+            Time = 0.500000000000000000
+            TabOrder = 0
+          end
+          object dtpDataFinal: TDateTimePicker
+            Left = 16
+            Top = 88
+            Width = 150
+            Height = 21
+            Date = 44927.000000000000000000
+            Time = 0.500000000000000000
+            TabOrder = 1
+          end
+        end
+        object Gb_Cidades: TGroupBox
+          Left = 425
+          Top = 16
+          Width = 200
+          Height = 56
+          Caption = 'Cidade'
+          TabOrder = 1
+          object lblCidade: TLabel
+            Left = 12
+            Top = 13
+            Width = 40
+            Height = 15
+            Caption = 'Cidade:'
+          end
+          object CMB_cidades: TDBLookupComboBox
+            Left = 12
+            Top = 28
+            Width = 167
+            Height = 23
+            KeyField = 'ID'
+            ListField = 'Nome'
+            TabOrder = 0
+          end
+        end
+        object Gb_Estados: TGroupBox
+          Left = 425
+          Top = 78
+          Width = 200
+          Height = 58
+          Caption = 'Estados'
+          TabOrder = 2
+          object CMB_Estado: TDBLookupComboBox
+            Left = 12
+            Top = 24
+            Width = 167
+            Height = 23
+            KeyField = 'ID'
+            ListField = 'Nome'
+            TabOrder = 0
+          end
+        end
+        object btn_filtrar: TButton
+          Left = 16
+          Top = 142
+          Width = 75
+          Height = 25
+          Caption = 'Filtrar'
+          TabOrder = 3
+        end
+        object Rgb_Filtro: TRadioGroup
+          Left = 16
+          Top = 16
+          Width = 185
+          Height = 120
+          Caption = 'Tipo de filtro'
+          Items.Strings = (
+            'Todos os clientes'
+            'Clientes por Per'#237'odo'
+            'Clientes por Cidade'
+            'Clientes por Estado')
+          TabOrder = 4
+          OnClick = Rgb_FiltroClick
+        end
+      end
+      object GrdClientes: TDBGrid
+        Left = 0
+        Top = 193
+        Width = 1033
+        Height = 440
+        Align = alClient
+        TabOrder = 1
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -12
+        TitleFont.Name = 'Segoe UI'
+        TitleFont.Style = []
+        OnDblClick = GrdClientesDblClick
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'NOME_CLIENTE'
+            Title.Caption = 'Nome'
+            Width = 281
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'CEP'
+            Width = 119
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'CPF_CNPJ'
+            Title.Caption = 'CPF/CNPJ'
+            Width = 136
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'ENDERECO'
+            Title.Caption = 'Endere'#231'o'
+            Width = 304
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'NUMERO'
+            Title.Caption = 'N'#250'mero'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'COMPLEMENTO'
+            Title.Caption = 'Complemento'
+            Width = 349
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'BAIRRO'
+            Title.Caption = 'Bairro'
+            Width = 186
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'NOME_CIDADE'
+            Title.Caption = 'Cidade'
+            Width = 177
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'NOME_ESTADO'
+            Title.Caption = 'Estado'
+            Width = 187
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'DATANASCIMENTO'
+            Title.Caption = 'Data de nascimento'
+            Width = 133
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'ID'
+            Visible = False
+          end>
+      end
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 663
+    Width = 1041
+    Height = 41
+    Align = alBottom
+    TabOrder = 1
+    object Btn_novo: TButton
+      Left = 16
+      Top = 6
+      Width = 75
+      Height = 25
+      Caption = 'Novo'
+      TabOrder = 0
+      OnClick = Btn_novoClick
+    end
+    object Btn_Limpar: TButton
+      Left = 256
+      Top = 6
+      Width = 75
+      Height = 25
+      Caption = 'Limpar'
+      TabOrder = 1
+      OnClick = Btn_LimparClick
+    end
+    object Btn_Salvar: TButton
+      Left = 96
+      Top = 6
+      Width = 75
+      Height = 25
+      Caption = 'Salvar'
+      TabOrder = 2
+      OnClick = Btn_SalvarClick
+    end
+    object Btn_Fechar: TButton
+      Left = 337
+      Top = 6
+      Width = 75
+      Height = 25
+      Caption = 'Fechar'
+      TabOrder = 3
+      OnClick = Btn_FecharClick
+    end
+    object Btn_Excluir: TButton
+      Left = 175
+      Top = 6
+      Width = 75
+      Height = 25
+      Caption = 'Excluir'
+      TabOrder = 4
+      OnClick = Btn_ExcluirClick
+    end
+  end
+end

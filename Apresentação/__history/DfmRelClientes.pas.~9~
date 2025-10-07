@@ -1,0 +1,219 @@
+unit DfmRelClientes;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls,
+  Vcl.Mask, Vcl.DBCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.UI.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.Phys.FB, FireDAC.Phys.FBDef,
+  FireDAC.VCLUI.Wait, UcadClientes, Datasnap.DBClient, Datasnap.Provider,
+  Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids, UValidacoes, UFuncionalidades,
+  ppParameter, ppDesignLayer, ppBands, ppCtrls, Vcl.Imaging.jpeg, ppVar,
+  ppPrnabl, ppClass, ppCache, ppProd, ppReport, ppComm, ppRelatv, ppDB, ppDBPipe;
+
+type
+  TFrmrelClientes = class(TForm)
+    Panel1: TPanel;
+    Btn_relatorio: TButton;
+    Btn_Fechar: TButton;
+    Panel2: TPanel;
+    GrdClientes: TDBGrid;
+    Rgb_Filtro: TRadioGroup;
+    Gb_periodo: TGroupBox;
+    lblDataInicial: TLabel;
+    lblDataFinal: TLabel;
+    dtpDataInicial: TDateTimePicker;
+    dtpDataFinal: TDateTimePicker;
+    Gb_Cidades: TGroupBox;
+    lblCidade: TLabel;
+    CMB_cidades: TDBLookupComboBox;
+    Gb_Estados: TGroupBox;
+    CMB_Estado: TDBLookupComboBox;
+    btn_filtrar: TButton;
+    ppDBPipeline1: TppDBPipeline;
+    ppReport1: TppReport;
+    ppHeaderBand1: TppHeaderBand;
+    lbtitulo: TppLabel;
+    paginacao: TppSystemVariable;
+    data: TppSystemVariable;
+    ppLine1: TppLine;
+    ppLine2: TppLine;
+    lbId: TppLabel;
+    LbNome: TppLabel;
+    LbCPF_CNPJ: TppLabel;
+    LbCEP: TppLabel;
+    LbBairro: TppLabel;
+    LbCidade: TppLabel;
+    LbEstado: TppLabel;
+    logo: TppImage;
+    ppDetailBand1: TppDetailBand;
+    DtNome: TppDBText;
+    Dtid: TppDBText;
+    DtCPF_CNPJ: TppDBText;
+    DtCEP: TppDBText;
+    DtBairro: TppDBText;
+    DtCidade: TppDBText;
+    DtEstado: TppDBText;
+    ppFooterBand1: TppFooterBand;
+    LbURL: TppLabel;
+    LbEndereco: TppLabel;
+    LbTelefone: TppLabel;
+    ppDesignLayers1: TppDesignLayers;
+    ppDesignLayer1: TppDesignLayer;
+    ppParameterList1: TppParameterList;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure Rgb_FiltroClick(Sender: TObject);
+    procedure btn_filtrarClick(Sender: TObject);
+    procedure Btn_FecharClick(Sender: TObject);
+    procedure Btn_relatorioClick(Sender: TObject);
+  private
+    { Private declarations }
+    FUCadClientes: TcadClientes;
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmrelClientes: TFrmrelClientes;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFrmrelClientes.Btn_FecharClick(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TFrmrelClientes.btn_filtrarClick(Sender: TObject);
+begin
+  case Rgb_Filtro.ItemIndex of
+     0:
+     begin
+       FUCadClientes.FOpcaoFiltro := 0;
+       FUCadClientes.AplicarFiltros;
+     end;
+     1:
+     begin
+        FUCadClientes.FDataNascIni := dtpDataInicial.Date;
+        FUCadClientes.FDataNascFin := dtpDataFinal.Date;
+        FUCadClientes.FOpcaoFiltro := 1;
+        FUCadClientes.AplicarFiltros;
+     end;
+     2:
+     begin
+       if CMB_cidades.KeyValue < 0 then
+       begin
+         MessageDlg('Informe uma Cidade!',TMsgDlgType.mtWarning,[TMsgDlgBtn.mbOK],0);
+         Exit;
+       end;
+       FUCadClientes.FIdCidade := StrToInt(CMB_cidades.KeyValue);
+       FUCadClientes.FOpcaoFiltro := 2;
+       FUCadClientes.AplicarFiltros;
+     end;
+     3:
+     begin
+       if CMB_Estado.KeyValue < 0 then
+       begin
+         MessageDlg('Informe um Estado!',TMsgDlgType.mtWarning,[TMsgDlgBtn.mbOK],0);
+         Exit;
+       end;
+       FUCadClientes.FIdEstado := StrToInt(CMB_Estado.KeyValue);
+       FUCadClientes.FOpcaoFiltro := 3;
+       FUCadClientes.AplicarFiltros;
+     end;
+  end;
+end;
+
+procedure TFrmrelClientes.Btn_relatorioClick(Sender: TObject);
+begin
+if FUCadClientes.FqueryClientes.RecordCount > 0 then
+  begin
+    try
+      ppReport1.print;
+    except
+      on E: Exception do
+        MessageDlg('Erro ao visualizar relat�rio: ' + E.Message,TMsgDlgType.mtError ,[TMsgDlgBtn.mbOK],0);
+    end;
+  end
+  else
+    MessageDlg('Nenhum dado para visualizar. Gere o relat�rio primeiro.',TMsgDlgType.mtInformation ,[TMsgDlgBtn.mbOK],0);
+end;
+
+
+procedure TFrmrelClientes.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  action := TCloseAction.caFree;
+end;
+
+procedure TFrmrelClientes.FormCreate(Sender: TObject);
+begin
+  FUCadClientes := TcadClientes.Create;
+  FUCadClientes.FOpcaoFiltro := 0;
+end;
+
+procedure TFrmrelClientes.FormShow(Sender: TObject);
+begin
+  Rgb_Filtro.ItemIndex := 0;
+  FUCadClientes.CarregarDadosClientes;
+  FUCadClientes.CarregarCidades;
+  FUCadClientes.CarregarEstados;
+  FUCadClientes.RetornarDadosDoCliente(0);
+  GrdClientes.DataSource := FUCadClientes.FDataSourceCliente;
+  CMB_cidades.ListSource := FUCadClientes.FDtsCidades;
+  CMB_Estado.ListSource := FUCadClientes.FDtsEstados;
+  ppDBPipeline1.DataSource := FUCadClientes.FDataSourceCliente;
+end;
+
+procedure TFrmrelClientes.Rgb_FiltroClick(Sender: TObject);
+begin
+  case Rgb_Filtro.ItemIndex of
+   0:
+    begin
+      btn_filtrar.Enabled := False;
+      Gb_periodo.Enabled := False;
+      Gb_Cidades.Enabled := False;
+      Gb_Estados.Enabled := False;
+      CMB_cidades.KeyValue := -1;
+      CMB_Estado.KeyValue := -1;
+      if FUCadClientes.FOpcaoFiltro > 0 then
+      begin
+        FUCadClientes.FOpcaoFiltro := 0;
+        FUCadClientes.AplicarFiltros;
+      end;
+    end;
+   1:
+    begin
+      btn_filtrar.Enabled := True;
+      Gb_periodo.Enabled := True;
+      Gb_Cidades.Enabled := False;
+      Gb_Estados.Enabled := False;
+      CMB_cidades.KeyValue := -1;
+      CMB_Estado.KeyValue := -1;
+    end;
+   2:
+    begin
+      btn_filtrar.Enabled := True;
+      Gb_periodo.Enabled := False;
+      Gb_Cidades.Enabled := True;
+      Gb_Estados.Enabled := False;
+      CMB_Estado.KeyValue := -1;
+    end;
+   3:
+    begin
+      btn_filtrar.Enabled := True;
+      Gb_periodo.Enabled := False;
+      Gb_Cidades.Enabled := False;
+      Gb_Estados.Enabled := True;
+      CMB_cidades.KeyValue := -1;
+    end;
+ end;
+end;
+
+end.

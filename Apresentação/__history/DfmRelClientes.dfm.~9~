@@ -1,0 +1,1000 @@
+object FrmrelClientes: TFrmrelClientes
+  Left = 0
+  Top = 0
+  Caption = 'Relat'#243'rio de Clientes'
+  ClientHeight = 680
+  ClientWidth = 1035
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  FormStyle = fsMDIChild
+  Visible = True
+  WindowState = wsMaximized
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnShow = FormShow
+  TextHeight = 15
+  object Panel1: TPanel
+    Left = 0
+    Top = 639
+    Width = 1035
+    Height = 41
+    Align = alBottom
+    TabOrder = 0
+    ExplicitLeft = -6
+    ExplicitWidth = 1041
+    object Btn_relatorio: TButton
+      Left = 16
+      Top = 6
+      Width = 75
+      Height = 25
+      Caption = 'Relat'#243'rio'
+      TabOrder = 0
+      OnClick = Btn_relatorioClick
+    end
+    object Btn_Fechar: TButton
+      Left = 96
+      Top = 6
+      Width = 75
+      Height = 25
+      Caption = 'Fechar'
+      TabOrder = 1
+      OnClick = Btn_FecharClick
+    end
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 0
+    Width = 1035
+    Height = 177
+    Align = alTop
+    BevelOuter = bvNone
+    TabOrder = 1
+    object Rgb_Filtro: TRadioGroup
+      Left = 16
+      Top = 16
+      Width = 205
+      Height = 120
+      Caption = 'Tipo de filtro'
+      Items.Strings = (
+        'Todos os clientes'
+        'Clientes por Data de nascimento'
+        'Clientes por Cidade'
+        'Clientes por Estado')
+      TabOrder = 0
+      OnClick = Rgb_FiltroClick
+    end
+    object Gb_periodo: TGroupBox
+      Left = 227
+      Top = 16
+      Width = 200
+      Height = 120
+      Caption = 'Data de nascimento'
+      TabOrder = 1
+      object lblDataInicial: TLabel
+        Left = 16
+        Top = 24
+        Width = 61
+        Height = 15
+        Caption = 'Data Inicial:'
+      end
+      object lblDataFinal: TLabel
+        Left = 16
+        Top = 72
+        Width = 55
+        Height = 15
+        Caption = 'Data Final:'
+      end
+      object dtpDataInicial: TDateTimePicker
+        Left = 16
+        Top = 40
+        Width = 150
+        Height = 21
+        Date = 44897.000000000000000000
+        Time = 0.500000000000000000
+        TabOrder = 0
+      end
+      object dtpDataFinal: TDateTimePicker
+        Left = 16
+        Top = 88
+        Width = 150
+        Height = 21
+        Date = 44927.000000000000000000
+        Time = 0.500000000000000000
+        TabOrder = 1
+      end
+    end
+    object Gb_Cidades: TGroupBox
+      Left = 436
+      Top = 16
+      Width = 200
+      Height = 56
+      Caption = 'Cidade'
+      TabOrder = 2
+      object lblCidade: TLabel
+        Left = 12
+        Top = 13
+        Width = 40
+        Height = 15
+        Caption = 'Cidade:'
+      end
+      object CMB_cidades: TDBLookupComboBox
+        Left = 12
+        Top = 28
+        Width = 167
+        Height = 23
+        KeyField = 'ID'
+        ListField = 'Nome'
+        TabOrder = 0
+      end
+    end
+    object Gb_Estados: TGroupBox
+      Left = 436
+      Top = 78
+      Width = 200
+      Height = 58
+      Caption = 'Estados'
+      TabOrder = 3
+      object CMB_Estado: TDBLookupComboBox
+        Left = 12
+        Top = 24
+        Width = 167
+        Height = 23
+        KeyField = 'ID'
+        ListField = 'Nome'
+        TabOrder = 0
+      end
+    end
+    object btn_filtrar: TButton
+      Left = 16
+      Top = 142
+      Width = 75
+      Height = 25
+      Caption = 'Filtrar'
+      TabOrder = 4
+      OnClick = btn_filtrarClick
+    end
+  end
+  object GrdClientes: TDBGrid
+    Left = 0
+    Top = 177
+    Width = 1035
+    Height = 462
+    Align = alClient
+    TabOrder = 2
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -12
+    TitleFont.Name = 'Segoe UI'
+    TitleFont.Style = []
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'NOME_CLIENTE'
+        Title.Caption = 'Nome'
+        Width = 281
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'CEP'
+        Width = 119
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'CPF_CNPJ'
+        Title.Caption = 'CPF/CNPJ'
+        Width = 136
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'ENDERECO'
+        Title.Caption = 'Endere'#231'o'
+        Width = 304
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NUMERO'
+        Title.Caption = 'N'#250'mero'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'COMPLEMENTO'
+        Title.Caption = 'Complemento'
+        Width = 349
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'BAIRRO'
+        Title.Caption = 'Bairro'
+        Width = 186
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NOME_CIDADE'
+        Title.Caption = 'Cidade'
+        Width = 177
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NOME_ESTADO'
+        Title.Caption = 'Estado'
+        Width = 187
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'DATANASCIMENTO'
+        Title.Caption = 'Data de nascimento'
+        Width = 133
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'ID'
+        Visible = False
+      end>
+  end
+  object ppDBPipeline1: TppDBPipeline
+    UserName = 'DBPipeline1'
+    Left = 920
+    Top = 36
+  end
+  object ppReport1: TppReport
+    AutoStop = False
+    DataPipeline = ppDBPipeline1
+    PassSetting = psTwoPass
+    PrinterSetup.BinName = 'Default'
+    PrinterSetup.DocumentName = 'Report'
+    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PrinterName = 'Default'
+    PrinterSetup.SaveDeviceSettings = False
+    PrinterSetup.mmMarginBottom = 6350
+    PrinterSetup.mmMarginLeft = 6350
+    PrinterSetup.mmMarginRight = 6350
+    PrinterSetup.mmMarginTop = 6350
+    PrinterSetup.mmPaperHeight = 297000
+    PrinterSetup.mmPaperWidth = 210000
+    PrinterSetup.PaperSize = 9
+    ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
+    DeviceType = 'Screen'
+    DefaultFileDeviceType = 'PDF'
+    EmailSettings.ReportFormat = 'PDF'
+    EmailSettings.ConnectionSettings.MailService = 'SMTP'
+    EmailSettings.ConnectionSettings.WebMail.GmailSettings.OAuth2.AuthStorage = [oasAccessToken, oasRefreshToken, oasEncryptTokens]
+    EmailSettings.ConnectionSettings.WebMail.GmailSettings.OAuth2.RedirectURI = 'http://localhost'
+    EmailSettings.ConnectionSettings.WebMail.GmailSettings.OAuth2.RedirectPort = 0
+    EmailSettings.ConnectionSettings.WebMail.GmailSettings.OAuth2.RefreshTokenLifeSpan = 365
+    EmailSettings.ConnectionSettings.WebMail.Outlook365Settings.OAuth2.AuthStorage = [oasAccessToken, oasRefreshToken, oasEncryptTokens]
+    EmailSettings.ConnectionSettings.WebMail.Outlook365Settings.OAuth2.RedirectURI = 'http://localhost'
+    EmailSettings.ConnectionSettings.WebMail.Outlook365Settings.OAuth2.RedirectPort = 0
+    EmailSettings.ConnectionSettings.WebMail.Outlook365Settings.OAuth2.RefreshTokenLifeSpan = 365
+    EmailSettings.ConnectionSettings.EnableMultiPlugin = False
+    EmailSettings.ConnectionSettings.ConnectionStatusInfo = [csiStatusBar]
+    LanguageID = 'Default'
+    OpenFile = False
+    OutlineSettings.CreateNode = True
+    OutlineSettings.CreatePageNodes = True
+    OutlineSettings.Enabled = True
+    OutlineSettings.Visible = True
+    ThumbnailSettings.Enabled = True
+    ThumbnailSettings.Visible = True
+    ThumbnailSettings.DeadSpace = 30
+    ThumbnailSettings.PageHighlight.Width = 3
+    ThumbnailSettings.ThumbnailSize = tsSmall
+    PDFSettings.EmbedFontOptions = [efUseSubset]
+    PDFSettings.EncryptSettings.AllowCopy = True
+    PDFSettings.EncryptSettings.AllowInteract = True
+    PDFSettings.EncryptSettings.AllowModify = True
+    PDFSettings.EncryptSettings.AllowPrint = True
+    PDFSettings.EncryptSettings.AllowExtract = True
+    PDFSettings.EncryptSettings.AllowAssemble = True
+    PDFSettings.EncryptSettings.AllowQualityPrint = True
+    PDFSettings.EncryptSettings.Enabled = False
+    PDFSettings.EncryptSettings.KeyLength = kl40Bit
+    PDFSettings.EncryptSettings.EncryptionType = etRC4
+    PDFSettings.DigitalSignatureSettings.SignPDF = False
+    PDFSettings.FontEncoding = feAnsi
+    PDFSettings.ImageCompressionLevel = 25
+    PDFSettings.PDFAFormat = pafNone
+    PDFSettings.Layers = False
+    PDFSettings.Outline = False
+    PreviewFormSettings.PageBorder.mmPadding = 0
+    PreviewFormSettings.WindowState = wsMaximized
+    RTFSettings.AppName = 'ReportBuilder'
+    RTFSettings.Author = 'ReportBuilder'
+    RTFSettings.DefaultFont.Charset = DEFAULT_CHARSET
+    RTFSettings.DefaultFont.Color = clWindowText
+    RTFSettings.DefaultFont.Height = -13
+    RTFSettings.DefaultFont.Name = 'Arial'
+    RTFSettings.DefaultFont.Style = []
+    RTFSettings.Title = 'Report'
+    TextFileName = '($MyDocuments)\Report.pdf'
+    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.Enabled = True
+    XLSSettings.AppName = 'ReportBuilder'
+    XLSSettings.Author = 'ReportBuilder'
+    XLSSettings.Subject = 'Report'
+    XLSSettings.Title = 'Report'
+    XLSSettings.WorksheetName = 'Report'
+    CloudDriveSettings.DropBoxSettings.OAuth2.AuthStorage = [oasAccessToken, oasRefreshToken, oasEncryptTokens]
+    CloudDriveSettings.DropBoxSettings.OAuth2.RedirectURI = 'http://localhost'
+    CloudDriveSettings.DropBoxSettings.OAuth2.RedirectPort = 0
+    CloudDriveSettings.DropBoxSettings.OAuth2.RefreshTokenLifeSpan = 365
+    CloudDriveSettings.DropBoxSettings.DirectorySupport = True
+    CloudDriveSettings.DropBoxSettings.SharedResources = True
+    CloudDriveSettings.GoogleDriveSettings.OAuth2.AuthStorage = [oasAccessToken, oasRefreshToken, oasEncryptTokens]
+    CloudDriveSettings.GoogleDriveSettings.OAuth2.RedirectURI = 'http://localhost'
+    CloudDriveSettings.GoogleDriveSettings.OAuth2.RedirectPort = 0
+    CloudDriveSettings.GoogleDriveSettings.OAuth2.RefreshTokenLifeSpan = 365
+    CloudDriveSettings.GoogleDriveSettings.DirectorySupport = False
+    CloudDriveSettings.GoogleDriveSettings.SharedResources = False
+    CloudDriveSettings.OneDriveSettings.OAuth2.AuthStorage = [oasAccessToken, oasRefreshToken, oasEncryptTokens]
+    CloudDriveSettings.OneDriveSettings.OAuth2.RedirectURI = 'http://localhost'
+    CloudDriveSettings.OneDriveSettings.OAuth2.RedirectPort = 0
+    CloudDriveSettings.OneDriveSettings.OAuth2.RefreshTokenLifeSpan = 365
+    CloudDriveSettings.OneDriveSettings.DirectorySupport = True
+    CloudDriveSettings.OneDriveSettings.SharedResources = True
+    Left = 920
+    Top = 108
+    Version = '23.01'
+    mmColumnWidth = 0
+    DataPipelineName = 'ppDBPipeline1'
+    object ppHeaderBand1: TppHeaderBand
+      Border.mmPadding = 0
+      mmBottomOffset = 0
+      mmHeight = 33338
+      mmPrintPosition = 0
+      object lbtitulo: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'lbtitulo'
+        Border.mmPadding = 0
+        Caption = 'Relat'#243'rio de Clientes'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 24
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        Transparent = True
+        mmHeight = 9790
+        mmLeft = 82286
+        mmTop = 11906
+        mmWidth = 85196
+        BandType = 0
+        LayerName = Foreground
+      end
+      object paginacao: TppSystemVariable
+        DesignLayer = ppDesignLayer1
+        UserName = 'paginacao'
+        Border.mmPadding = 0
+        VarType = vtPageSetDesc
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3704
+        mmLeft = 173832
+        mmTop = 7144
+        mmWidth = 18785
+        BandType = 0
+        LayerName = Foreground
+      end
+      object data: TppSystemVariable
+        DesignLayer = ppDesignLayer1
+        UserName = 'data'
+        Border.mmPadding = 0
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3704
+        mmLeft = 178330
+        mmTop = 1852
+        mmWidth = 14287
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLine1: TppLine
+        DesignLayer = ppDesignLayer1
+        UserName = 'Line1'
+        Border.mmPadding = 0
+        Weight = 0.750000000000000000
+        mmHeight = 3969
+        mmLeft = -265
+        mmTop = 26480
+        mmWidth = 198173
+        BandType = 0
+        LayerName = Foreground
+      end
+      object ppLine2: TppLine
+        DesignLayer = ppDesignLayer1
+        UserName = 'Line2'
+        Border.mmPadding = 0
+        Weight = 0.750000000000000000
+        mmHeight = 5556
+        mmLeft = 2
+        mmTop = 32822
+        mmWidth = 197643
+        BandType = 0
+        LayerName = Foreground
+      end
+      object lbId: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'lbId'
+        Border.mmPadding = 0
+        Caption = 'Id'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        Transparent = True
+        mmHeight = 3704
+        mmLeft = 1588
+        mmTop = 28067
+        mmWidth = 2645
+        BandType = 0
+        LayerName = Foreground
+      end
+      object LbNome: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'LbNome'
+        Border.mmPadding = 0
+        Caption = 'Nome'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        Transparent = True
+        mmHeight = 3704
+        mmLeft = 11642
+        mmTop = 28067
+        mmWidth = 8466
+        BandType = 0
+        LayerName = Foreground
+      end
+      object LbCPF_CNPJ: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'LbCPF_CNPJ'
+        Border.mmPadding = 0
+        Caption = 'CPF/CNPJ'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        Transparent = True
+        mmHeight = 3704
+        mmLeft = 55872
+        mmTop = 28067
+        mmWidth = 13758
+        BandType = 0
+        LayerName = Foreground
+      end
+      object LbCEP: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'LbCEP'
+        Border.mmPadding = 0
+        Caption = 'CEP'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        Transparent = True
+        mmHeight = 3704
+        mmLeft = 88681
+        mmTop = 28067
+        mmWidth = 5556
+        BandType = 0
+        LayerName = Foreground
+      end
+      object LbBairro: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'LbBairro'
+        Border.mmPadding = 0
+        Caption = 'Bairro'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        Transparent = True
+        mmHeight = 3704
+        mmLeft = 115404
+        mmTop = 28067
+        mmWidth = 8731
+        BandType = 0
+        LayerName = Foreground
+      end
+      object LbCidade: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'LbCidade'
+        Border.mmPadding = 0
+        Caption = 'Cidade'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        Transparent = True
+        mmHeight = 3704
+        mmLeft = 144508
+        mmTop = 28067
+        mmWidth = 10054
+        BandType = 0
+        LayerName = Foreground
+      end
+      object LbEstado: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'Label101'
+        Border.mmPadding = 0
+        Caption = 'Estado'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        Transparent = True
+        mmHeight = 3704
+        mmLeft = 180491
+        mmTop = 28067
+        mmWidth = 9790
+        BandType = 0
+        LayerName = Foreground
+      end
+      object logo: TppImage
+        DesignLayer = ppDesignLayer1
+        UserName = 'logo'
+        AlignHorizontal = ahCenter
+        AlignVertical = avCenter
+        MaintainAspectRatio = False
+        RotationAngle = 0
+        Border.mmPadding = 0
+        Picture.Data = {
+          0A544A504547496D616765B6150000FFD8FFE000104A46494600010101006000
+          600000FFE1028A4578696600004D4D002A000000080004013B00020000000800
+          00014A8769000400000001000001529C9D00010000001000000272EA1C000700
+          00010C0000003E000000001CEA00000001000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000000000000000000000000000000005472616A616E6F0000
+          01EA1C00070000010C00000164000000001CEA00000001000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000054
+          00720061006A0061006E006F000000FFE10360687474703A2F2F6E732E61646F
+          62652E636F6D2F7861702F312E302F003C3F787061636B657420626567696E3D
+          27EFBBBF272069643D2757354D304D7043656869487A7265537A4E54637A6B63
+          3964273F3E0D0A3C783A786D706D65746120786D6C6E733A783D2261646F6265
+          3A6E733A6D6574612F223E3C7264663A52444620786D6C6E733A7264663D2268
+          7474703A2F2F7777772E77332E6F72672F313939392F30322F32322D7264662D
+          73796E7461782D6E7323223E3C7264663A4465736372697074696F6E20726466
+          3A61626F75743D22757569643A66616635626464352D626133642D313164612D
+          616433312D6433336437353138326631622220786D6C6E733A64633D22687474
+          703A2F2F7075726C2E6F72672F64632F656C656D656E74732F312E312F222F3E
+          3C7264663A4465736372697074696F6E207264663A61626F75743D2275756964
+          3A66616635626464352D626133642D313164612D616433312D64333364373531
+          38326631622220786D6C6E733A64633D22687474703A2F2F7075726C2E6F7267
+          2F64632F656C656D656E74732F312E312F223E3C64633A63726561746F723E3C
+          7264663A53657120786D6C6E733A7264663D22687474703A2F2F7777772E7733
+          2E6F72672F313939392F30322F32322D7264662D73796E7461782D6E7323223E
+          3C7264663A6C693E5472616A616E6F3C2F7264663A6C693E3C2F7264663A5365
+          713E0D0A0909093C2F64633A63726561746F723E3C2F7264663A446573637269
+          7074696F6E3E3C2F7264663A5244463E3C2F783A786D706D6574613E0D0A2020
+          2020202020202020202020202020202020202020202020202020202020202020
+          2020202020202020202020202020202020202020202020202020202020202020
+          2020202020202020202020202020202020202020202020202020202020202020
+          20200A2020202020202020202020202020202020202020202020202020202020
+          2020202020202020202020202020202020202020202020202020202020202020
+          2020202020202020202020202020202020202020202020202020202020202020
+          202020202020200A202020202020202020202020202020202020202020202020
+          2020202020202020202020202020202020202020202020202020202020203C3F
+          787061636B657420656E643D2777273F3EFFDB00430007050506050407060506
+          080707080A110B0A09090A150F100C1118151A19181518171B1E27211B1D251D
+          1718222E222528292B2C2B1A202F332F2A32272A2B2AFFDB0043010708080A09
+          0A140B0B142A1C181C2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A
+          2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2A2AFFC0001108
+          008A012103012200021101031101FFC4001F0000010501010101010100000000
+          000000000102030405060708090A0BFFC400B510000201030302040305050404
+          0000017D01020300041105122131410613516107227114328191A1082342B1C1
+          1552D1F02433627282090A161718191A25262728292A3435363738393A434445
+          464748494A535455565758595A636465666768696A737475767778797A838485
+          868788898A92939495969798999AA2A3A4A5A6A7A8A9AAB2B3B4B5B6B7B8B9BA
+          C2C3C4C5C6C7C8C9CAD2D3D4D5D6D7D8D9DAE1E2E3E4E5E6E7E8E9EAF1F2F3F4
+          F5F6F7F8F9FAFFC4001F01000301010101010101010100000000000001020304
+          05060708090A0BFFC400B5110002010204040304070504040001027700010203
+          1104052131061241510761711322328108144291A1B1C109233352F0156272D1
+          0A162434E125F11718191A262728292A35363738393A434445464748494A5354
+          55565758595A636465666768696A737475767778797A82838485868788898A92
+          939495969798999AA2A3A4A5A6A7A8A9AAB2B3B4B5B6B7B8B9BAC2C3C4C5C6C7
+          C8C9CAD2D3D4D5D6D7D8D9DAE2E3E4E5E6E7E8E9EAF2F3F4F5F6F7F8F9FAFFDA
+          000C03010002110311003F00F35A28A2BEACF3428A28A0028A28A0028A28A002
+          8A28A0028A28A0028A28A0028A28A0028A28A0028A28A0028A28A0028A28A002
+          8A28A0028A28A0028A28A0028A28A0028A28A0028A28A0028A28A0028A28A002
+          8A28A0028A28A0028A28A0028A28A0028A28A0028A28A0028A28A0028A28A002
+          8A28A0028A28A0028A28A0028A28A0028A28A0028A28A0028A28A0028A28A002
+          8A28A0028A28A0028A28A0028A29638DE59563851A491CED544192C7D00A1B49
+          5D809535A5A5CDFDC791636F2DCCBFDC890B11F974AF43F0D7C2B69552EBC4AE
+          50751691376FF6987F21F9D7A45869B67A65B8834FB58ADA21FC31A81FFEBAF3
+          AAE392D20AE6F1A2DEE78FE9BF0BFC417C81EE841A7A9ED33EE7FC9723F5AE8E
+          CBE0FDA2F3A8EAB7131F4811631FAEEAF46A2B8658AAB2EA6AA9C57438E8BE17
+          786A35C3C37329F57B86FE98A97FE159F85F1FF1E327FE04C9FF00C557594565
+          ED26FAB2B95763907F861E1965C2DB4E9EEB70FF00D4D675DFC22D2E453F62D4
+          2F2DDBB6FDB22FE5807F5AF40A6BBAC685DD82AA8C96638029AAB516D261CB17
+          D0F21BFF0084FACDB46CD63756B7B8E8A73131FCF23F5AE4751D1F51D21B6EA9
+          633DAE4E01917E527D98707F3AF5BD5BE29786B4B99A15B992F2453822D9370C
+          FF00BC48158D37C62D0AE2278A6D26F258D860ABAA10C3DC66B655EB7725C227
+          98E28AE8755BFF0007EACCD2E962E747B83FF2CE58F742C7FE02495FC38F6AC2
+          92331C8518A923A1460C08F5047515BC715516E66E9A23A2948A4C575D3C5465
+          A4B433706B60A28A2BACCC28A28A0028A28A0028A28A0028A28A0028A28A0028
+          A28A0028A28A0028A28A0028A28A0028A28A0039E80124F0001D6BD9FC07E0B8
+          F42B34BFBF40FA94CB9E47FA953FC23DFD4D79EFC3FD31753F19DAACA018EDC1
+          9D81EFB7A7EA457BAD7938EAAF9BD9A3A69474E60A28A2BCD370A28A2800A28A
+          2801B2C890C4D24AC111016662780077AF02F1E78FEEBC4B7D25969F2343A5C6
+          DB42A9C19B1FC47DBD057A2FC5BD65F4BF0635BC2C564BD9045907F87A9AF07B
+          75C915A410993436FBBB569DA68D737ADB2D2DA59D80C95890B11F956D782BC3
+          ABAF6B2904EC63B5894CB70E3AAA0EB8F73D2BD3FF00B4DAD6216DA420B0B44E
+          16383E527DD8F526BD4C361275DFBA633A8A1B9E2B77A45C59C9E5DD5BC903F5
+          DB22153F91ACF65920605091839C57BC9BF5BF84DA6B918BFB47E0897964F756
+          EA0D795F8C7C3E740D726B3DDE64780F0BFF00791B90696270B3A0ED2084D4D6
+          864C5289A20E3F11E869D54EC98ADC3276619AB86B88A0A4A5A435DB85AAD3E4
+          66538E972E695A6C9AADF2DBC476F196623EE8AE9DBC37A1DB3A417574C2661C
+          0690027F0AA5E096517F70A7EF18C63F3AADE278273E2272A8E4B85D840EBC57
+          B91518D2E7B5CE7EB61BAFF87CE91B6585CC9039C02DD54FA1ACFB7D2AFAEA30
+          F6F6B2C887A305E0D6C6B36BAD43A6A1D46EE39622EA0463AE7B76AD899AF6DF
+          4B8DAFF50834E5E0288A2DC7E9D7F951ECA3293D1A41738AB9B3B9B360B7503C
+          44F4DEB8CD3D74DBD685255B694A4870AC17835D9F89C2CBE180E584841421F1
+          8CFBFB5496775F61F07C57210398E2C807D68F611E669BE970BE8716BA55E9BD
+          5B56B7904A4676E3903D6B5F5EF0E2E9F6F149631CD20C132927216ABC1AEDDD
+          D78820B93B23762223B578DA4FBD6E78C2FAE2D6D628A07DA93865718072288C
+          69F24986B733B47F0C4171A78BDD466658D8160AA7181EA4D593E19D2B50B577
+          D22E98B2F192D919F43DEA7D12FAEECB454FB7593B5AAAE5658CA9F97DC66ADC
+          569A3EB96AEF6D105E705914A3035B469C1C524BFCC5767129A5DECAAED15B49
+          22A3152CAB9008A8ADECEE6ED996DA1794AF50A338AE9FC2F71F64D56EF4C76D
+          CA58ED27B91FFD6ABF6368BA1C5AA5DB8C0DE4A7B8EA3F5358468A924FEF1DCE
+          292C6EA5B868238246957EF205C91524FA55F5AC664B8B495107562BC0AE8BC2
+          DA9C11ADC8BA263926937798578FCEB5CDBDCC96328B0D452EC303C4C0383ED9
+          1D29C68C651BA6173CEE8A5705646561820E08A4AE52828A28A401451450075F
+          F0C6ED2DBC6891C871F6881E35FAF07FA1AF6BAF9AAD2EA6B1BC86EED5B64D03
+          8743E8457BF786FC416DE24D1E3BCB6601F1B658FBC6FDC1AF1F1B4DA9F3F467
+          55295D58D7A28A2BCF360A28A2800A28A2803CAFE38C4E74BD2E51F7166607EA
+          45791DB1E457D17E3DF0FB788FC2373690A86B84FDEC39FEF0EDF8F4AF9C5374
+          329490156538604720D6D064B3D4BE17CAAD71A9D98FF5D71687CA1DC9520903
+          F0AE8BA579368FAB4FA65F437767298E68583230EC6BD36D7C6FE1ED523126AC
+          971A75D9FBE6DD0491B9F503208FA57BB81C5C28A719ECCE7AB4DCB545D00920
+          0E49E95CB7C53953FB7ADADF20C96D671C727B375C7E19ADABCF1D685A4C45F4
+          48E7BEBCFE096E5024719F5DB9249AF30D535196FAEA5B8B990C92CAC59D98F2
+          49A58EC542B59436414A9B8EACAB6DCDE8C7606AE9EB55EC63215A56FE2E07D2
+          AC578E6AC290D2D21AE8C3C5CAA2F2339BB227B3BC9AC2E96E2D9B6BAFEBED5D
+          2A78DCF963CDB105C7757C0FE5599E14D162D7FC410E9F712BC4922B12C98C8C
+          0CF7AF41FF008545A67FD046EBF25FF0AF4DE31507CB73254DC95D1E6FAAEBB7
+          3AACC8D262348CE5117A03EBEF5A8FE2F49ED552EB4E8E675E858E573EB8C576
+          9FF0A8B4CFFA08DD7E4BFE151FFC2AAD1FCEF2BFB5A7F33FB994CFE559ACC609
+          B7CDBF915EC6471CFE2F33E9EF05CD946ECCA4641F97F2C5556F1196D07FB37E
+          CC31B36F99BFDFD315DEC9F09B498A36925D4EE11146599B68007D69B17C2AD1
+          E600C3AB4F2020302850E41EF4DE6507F6BF00F6323CB2195A199254FBC8C187
+          E15D05F78AD2FF004F6826B043232E0396CED3EA38AEDFFE151699FF00411BAF
+          C97FC28FF8545A67FD046EBF25FF000A98E614E29A4F7F20F632382D2BC5371A
+          75B8B792259E25FBA09C11ED9AB771E3591A1296968B0B11F799B38FC2BB2FF8
+          545A67FD046EBF25FF000A3FE151699FF411BAFC97FC2A966514ACA5F80BD8C8
+          F3ED0AC2FEF6FD6F2DB6FEEE505DD9B1F5AD9F196A4A96C9631B82EE77480761
+          DABAD87E16DA5B822DF57BE881EA10819AF30D7ACC69FAF5E5A2CAF28865281D
+          CFCCDF5ADA8E329CE0E10DFA932A6E3AB25D1F5F9B49578BCB59A173928DC7EB
+          579BC56B0DBBC7A669F1DA97EAC0F7F5C015CE515AAAB34AC993640496624F24
+          9C9A28A2B2185145140051451400568E87AEDF787B51179A749B5BA491B7DD91
+          7D08FEB59D454CA319AE590D369DD1EEBE1AF1CE97E2344895C5ADE9EB6D29E4
+          FF00BA7F88574B5F32F7047041C823A8AEA346F887AF68E82269D6FA05E91DCF
+          240F67EBF9E6BCAAB8192D61A9D11ACBA9EE545705A7FC5AD227451A95ADCD9B
+          FF001155F3547E239FD2BA4B2F17787F50506D757B424F45790237E4D835C52A
+          738FC48D5493D8D9A2A28AEADE6198678E41EA8E0D4B91EB599415E69E3DF860
+          3589A4D5340D915E3732C078594FA8F43FCEBD21E68A319924441EACC0567DD7
+          88F45B3526EB55B38FD8CEB9FCB34D36847CD77B637FA3DCFD9F53B59AD651FC
+          32A919FA7AD316E88EF5EE1AAFC49F0BB46D10864D4C7F745BFCA7F17C5703AB
+          78B56FC3C761A269BA7C6DDD6DD5E4C7D48C0FCAB78C993A1C69B966E0649F4A
+          961B4791B74FF2AFF77B9AB6AAA99DAA013C93EB4B9ABD593714F0303803A525
+          2668ADE9E1E73DF43373480D14515E953A71A6AC8C5B6CEAFE1B7FC8EF6BFEE3
+          FF00E835EDF5F39691AB5D689A8A5F5895132020175C8E7DABA3FF0085A1E23F
+          F9E96DFF007E4571E270D3AB3E689AD3A8A2ACCF6AAF2C93C27AF47F109AFEC6
+          C02C6D74D29B89DD1D4023A86187FF0080918AC8FF0085A1E23FF9E96DFF007E
+          451FF0B43C47FF003D2DBFEFC8AE6FA955F234F6B13666D0BC5FA8E937D6979F
+          6C6DF6A564596E959669B7E418F9F9576F638AB63C2FACD9EABA9B69C6F62326
+          9F12DACE2E46D1227542339F6F4E4D737FF0B43C47FF003D2DBFEFC8A3FE1687
+          88FF00E7A5B7FDF9147D4AAF907B589D1585878F04D349A84B332181E748D2E0
+          2FEF5860459E781D7D2ABD9D878EA5865B7B86D420492781964FB4AEE44E4480
+          1DCC7DEB17FE168788FF00E7A5B7FDF9147FC2D0F11FFCF4B6FF00BF228FA955
+          F20F6B13AB3A778BE1F1927977375269CB3A6C90CA0A1842E0861B87CD9FF649
+          F7AEFEBC57FE168788FF00E7A5B7FDF9147FC2D0F11FFCF4B6FF00BF228FA955
+          F20F6B13DAABE7EF17FF00C8E1A9FF00D7C356BFFC2D0F11FF00CF4B6FFBF22B
+          97BFBD9B52BF9AF2E76996662EFB46066BAB0B879D2937233A93525A15E8A28A
+          EF310A28A2800A28A2800A28A2800A28A2800A28A2800A4201EA334B45003422
+          8390A01F514FDEFF00F3D24FFBECD25153C917D0776232873971B8FF00B5CD00
+          01D001F852D152E941F40E6619A28A297B1A7D83998514515A28C63B215DB0A2
+          8A29805145140051451400514514005145140051451400514514005145140051
+          4514005145140051451400514514005145140051451400514514005145140051
+          4514005145140051451400514514005145140051451400514514005145140051
+          4514005145140051451400514514005145140051451400514514005145140051
+          4514005145140051451400514514005145140051451400514514005145140051
+          4514005145140051451400514514005145140051451400514514005145140051
+          451401FFD9}
+        mmHeight = 23813
+        mmLeft = -532
+        mmTop = 1852
+        mmWidth = 78579
+        BandType = 0
+        LayerName = Foreground
+      end
+    end
+    object ppDetailBand1: TppDetailBand
+      Border.mmPadding = 0
+      mmBottomOffset = 0
+      mmHeight = 7144
+      mmPrintPosition = 0
+      object DtNome: TppDBText
+        DesignLayer = ppDesignLayer1
+        UserName = 'DtNome'
+        AutoSize = True
+        Border.mmPadding = 0
+        DataField = 'NOME'
+        DataPipeline = ppDBPipeline1
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        Transparent = True
+        DataPipelineName = 'ppDBPipeline1'
+        mmHeight = 3704
+        mmLeft = 11642
+        mmTop = 1323
+        mmWidth = 7673
+        BandType = 4
+        LayerName = Foreground
+      end
+      object Dtid: TppDBText
+        DesignLayer = ppDesignLayer1
+        UserName = 'Dtid'
+        Border.mmPadding = 0
+        DataField = 'ID'
+        DataPipeline = ppDBPipeline1
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taCentered
+        Transparent = True
+        DataPipelineName = 'ppDBPipeline1'
+        mmHeight = 3704
+        mmLeft = 0
+        mmTop = 1323
+        mmWidth = 5281
+        BandType = 4
+        LayerName = Foreground
+      end
+      object DtCPF_CNPJ: TppDBText
+        DesignLayer = ppDesignLayer1
+        UserName = 'DtCPF_CNPJ'
+        AutoSize = True
+        Border.mmPadding = 0
+        DataField = 'CPF_CNPJ'
+        DataPipeline = ppDBPipeline1
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        Transparent = True
+        DataPipelineName = 'ppDBPipeline1'
+        mmHeight = 3704
+        mmLeft = 55827
+        mmTop = 1323
+        mmWidth = 13229
+        BandType = 4
+        LayerName = Foreground
+      end
+      object DtCEP: TppDBText
+        DesignLayer = ppDesignLayer1
+        UserName = 'DtCEP'
+        AutoSize = True
+        Border.mmPadding = 0
+        DataField = 'CEP'
+        DataPipeline = ppDBPipeline1
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        Transparent = True
+        DataPipelineName = 'ppDBPipeline1'
+        mmHeight = 3704
+        mmLeft = 88636
+        mmTop = 1323
+        mmWidth = 5027
+        BandType = 4
+        LayerName = Foreground
+      end
+      object DtBairro: TppDBText
+        DesignLayer = ppDesignLayer1
+        UserName = 'DtBairro'
+        AutoSize = True
+        Border.mmPadding = 0
+        DataField = 'Bairro'
+        DataPipeline = ppDBPipeline1
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        Transparent = True
+        DataPipelineName = 'ppDBPipeline1'
+        mmHeight = 3704
+        mmLeft = 115359
+        mmTop = 1323
+        mmWidth = 7672
+        BandType = 4
+        LayerName = Foreground
+      end
+      object DtCidade: TppDBText
+        DesignLayer = ppDesignLayer1
+        UserName = 'DtCidade'
+        AutoSize = True
+        Border.mmPadding = 0
+        DataField = 'Cidade'
+        DataPipeline = ppDBPipeline1
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        Transparent = True
+        DataPipelineName = 'ppDBPipeline1'
+        mmHeight = 3704
+        mmLeft = 144463
+        mmTop = 1323
+        mmWidth = 8731
+        BandType = 4
+        LayerName = Foreground
+      end
+      object DtEstado: TppDBText
+        DesignLayer = ppDesignLayer1
+        UserName = 'DtEstado'
+        AutoSize = True
+        Border.mmPadding = 0
+        DataField = 'Estado'
+        DataPipeline = ppDBPipeline1
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = []
+        Transparent = True
+        DataPipelineName = 'ppDBPipeline1'
+        mmHeight = 3704
+        mmLeft = 180446
+        mmTop = 1323
+        mmWidth = 8731
+        BandType = 4
+        LayerName = Foreground
+      end
+    end
+    object ppFooterBand1: TppFooterBand
+      Border.mmPadding = 0
+      mmBottomOffset = 0
+      mmHeight = 16933
+      mmPrintPosition = 0
+      object LbURL: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'LbURL'
+        Border.mmPadding = 0
+        Caption = 'www.cartsys.com.br'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        Transparent = True
+        mmHeight = 3705
+        mmLeft = 80963
+        mmTop = 1058
+        mmWidth = 30691
+        BandType = 8
+        LayerName = Foreground
+      end
+      object LbEndereco: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'LbEndereco'
+        Border.mmPadding = 0
+        Caption = 'R. Fortaleza, 170 - Bom Pastor, Divin'#243'polis - MG, 35500-198'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        Transparent = True
+        mmHeight = 3704
+        mmLeft = 56356
+        mmTop = 6085
+        mmWidth = 82815
+        BandType = 8
+        LayerName = Foreground
+      end
+      object LbTelefone: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'LbTelefone'
+        Border.mmPadding = 0
+        Caption = '(37) 3214-8583'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        Transparent = True
+        mmHeight = 3704
+        mmLeft = 87842
+        mmTop = 10319
+        mmWidth = 19844
+        BandType = 8
+        LayerName = Foreground
+      end
+    end
+    object ppDesignLayers1: TppDesignLayers
+      object ppDesignLayer1: TppDesignLayer
+        UserName = 'Foreground'
+        LayerType = ltBanded
+        Index = 0
+      end
+    end
+    object ppParameterList1: TppParameterList
+    end
+  end
+end

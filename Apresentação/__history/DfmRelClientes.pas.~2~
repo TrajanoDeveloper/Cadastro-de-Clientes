@@ -1,0 +1,25 @@
+unit DfmRelClientes;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DfmCadClientes, Data.DB, Vcl.Grids,
+  Vcl.DBGrids, Vcl.ExtCtrls, Vcl.DBCtrls, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Mask;
+
+type
+  TFrmrelClientes = class(TFrmcadClientes)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmrelClientes: TFrmrelClientes;
+
+implementation
+
+{$R *.dfm}
+
+end.

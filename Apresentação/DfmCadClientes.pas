@@ -14,7 +14,7 @@ uses
   Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids, UValidacoes, UFuncionalidades;
 
 type
-  THabilitaBotoes = (todos, novo, pesquisa);
+  THabilitaBotoes = (todos, novo, pesquisa, limpar);
   TFrmcadClientes = class(TForm)
     PageControl: TPageControl;
     Panel1: TPanel;
@@ -46,8 +46,6 @@ type
     Lb_complemento: TLabel;
     Lb_Bairro: TLabel;
     Lb_Estado: TLabel;
-    Label1: TLabel;
-    Label2: TLabel;
     Panel3: TPanel;
     GrdClientes: TDBGrid;
     Btn_Salvar: TButton;
@@ -77,13 +75,14 @@ type
     procedure btnBuscarCEPClick(Sender: TObject);
     procedure PageControlChange(Sender: TObject);
     procedure Rgb_FiltroClick(Sender: TObject);
+    procedure btn_filtrarClick(Sender: TObject);
   private
     { Private declarations }
     FUCadClientes: TcadClientes;
     HabilitaBotoes: THabilitaBotoes;
     procedure ParemtrizarCamposAoBanco;
     Procedure LimparCampos;
-    procedure HabilitarCampos(Componente: TWinControl; Habilitar: Boolean);
+    procedure HabilitarCampos(Habilitar: Boolean);
     procedure HabilitarBotoes(HabilitaBotao: THabilitaBotoes);
     function ValidarDados: Boolean;
 
@@ -100,12 +99,13 @@ implementation
 
 procedure TFrmcadClientes.Btn_novoClick(Sender: TObject);
 begin
-  Edt_nome.SetFocus;
   LimparCampos;
   HabilitarBotoes(novo);
+  HabilitarCampos(True);
   if not FUCadClientes.FCDS_Aux.Active then
     FUCadClientes.FCDS_Aux.Active := True;
   FUCadClientes.FCDS_Aux.Insert;
+  Edt_nome.SetFocus;
 end;
 
 procedure TFrmcadClientes.Btn_SalvarClick(Sender: TObject);
@@ -176,6 +176,7 @@ begin
   if MessageDlg('Você tem certeza que deseja excluir o cliente?',mtConfirmation,[mbyes,mbno],0)=mryes then
   begin
     FUCadClientes.Excluir;
+    FUCadClientes.CarregarDadosClientes;
   end;
   HabilitarBotoes(todos);
   LimparCampos;
@@ -186,27 +187,73 @@ begin
   Close;
 end;
 
+procedure TFrmcadClientes.btn_filtrarClick(Sender: TObject);
+begin
+  case Rgb_Filtro.ItemIndex of
+     0:
+     begin
+       FUCadClientes.FOpcaoFiltro := 0;
+       FUCadClientes.AplicarFiltros;
+     end;
+     1:
+     begin
+        FUCadClientes.FDataNascIni := dtpDataInicial.Date;
+        FUCadClientes.FDataNascFin := dtpDataFinal.Date;
+        FUCadClientes.FOpcaoFiltro := 1;
+        FUCadClientes.AplicarFiltros;
+     end;
+     2:
+     begin
+       if CMB_cidades.KeyValue < 0 then
+       begin
+         MessageDlg('Informe uma Cidade!',TMsgDlgType.mtWarning,[TMsgDlgBtn.mbOK],0);
+         Exit;
+       end;
+       FUCadClientes.FIdCidade := StrToInt(CMB_cidades.KeyValue);
+       FUCadClientes.FOpcaoFiltro := 2;
+       FUCadClientes.AplicarFiltros;
+     end;
+     3:
+     begin
+       if CMB_Estado.KeyValue < 0 then
+       begin
+         MessageDlg('Informe um Estado!',TMsgDlgType.mtWarning,[TMsgDlgBtn.mbOK],0);
+         Exit;
+       end;
+       FUCadClientes.FIdEstado := StrToInt(CMB_Estado.KeyValue);
+       FUCadClientes.FOpcaoFiltro := 3;
+       FUCadClientes.AplicarFiltros;
+     end;
+  end;
+
+end;
+
 procedure TFrmcadClientes.Btn_LimparClick(Sender: TObject);
 begin
   LimparCampos;
-  HabilitarBotoes(todos);
+  HabilitarBotoes(limpar);
+  HabilitarCampos(false);
 end;
 
 procedure TFrmcadClientes.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-action := TCloseAction.caFree;
+   action := TCloseAction.caFree;
 end;
 
 procedure TFrmcadClientes.FormCreate(Sender: TObject);
 begin
   FUCadClientes := TcadClientes.Create;
   ParemtrizarCamposAoBanco;
+  FUCadClientes.FOpcaoFiltro := 0;
 end;
 
 procedure TFrmcadClientes.FormShow(Sender: TObject);
 begin
   PageControl.TabIndex := 0;
+  Rgb_Filtro.ItemIndex := 0;
   FUCadClientes.CarregarDadosClientes;
+  FUCadClientes.CarregarCidades;
+  FUCadClientes.CarregarEstados;
   FUCadClientes.RetornarDadosDoCliente(0);
   LimparCampos;
   GrdClientes.DataSource := FUCadClientes.FDataSourceCliente;
@@ -229,10 +276,13 @@ begin
      Btn_Excluir.Enabled := true;
      Btn_Limpar.Enabled := true;
      Btn_Fechar.Enabled := true;
+     btnBuscarCEP.Enabled := false;
     end;
     novo:
     begin
       Btn_Excluir.Enabled := false;
+      Btn_novo.Enabled := False;
+      btnBuscarCEP.Enabled := true;
     end;
     pesquisa:
     begin
@@ -241,20 +291,29 @@ begin
      Btn_Excluir.Enabled := False;
      Btn_Limpar.Enabled := False;
      Btn_Fechar.Enabled := true;
+     btnBuscarCEP.Enabled := False;
+    end;
+    limpar:
+    begin
+     Btn_novo.Enabled := true;
+     Btn_Salvar.Enabled := true;
+     Btn_Excluir.Enabled := true;
+     Btn_Limpar.Enabled := true;
+     Btn_Fechar.Enabled := true;
+     btnBuscarCEP.Enabled := False;
     end;
   end;
 end;
 
-procedure TFrmcadClientes.HabilitarCampos(Componente: TWinControl;
-  Habilitar: Boolean);
+procedure TFrmcadClientes.HabilitarCampos(Habilitar: Boolean);
 var
   I: Integer;
 begin
-  for I := 0 to Componente.ControlCount - 1 do
+  for I := 0 to ComponentCount  - 1 do
    begin
-     if Componente.Controls[I] is TDBEdit  then
+     if Components[I] is TDBEdit  then
      begin
-       (Componente.Controls[I] as TDBEdit).Enabled := Habilitar;
+       (Components[I] as TDBEdit).Enabled := Habilitar;
      end;
     end;
 end;
@@ -272,9 +331,20 @@ end;
 procedure TFrmcadClientes.PageControlChange(Sender: TObject);
 begin
   if PageControl.TabIndex = 0 then
+  begin
     HabilitarBotoes(todos);
+    CMB_cidades.KeyValue := -1;
+    CMB_Estado.KeyValue := -1;
+  end;
   if PageControl.TabIndex = 1 then
+  begin
     HabilitarBotoes(pesquisa);
+    LimparCampos;
+    HabilitarCampos(false);
+    Rgb_Filtro.ItemIndex := 0;
+    FUCadClientes.FOpcaoFiltro := 0;
+    FUCadClientes.AplicarFiltros;
+  end;
 end;
 
 procedure TFrmcadClientes.ParemtrizarCamposAoBanco;
@@ -299,38 +369,54 @@ begin
  Edt_cidade.DataField := 'NOME_CIDADE';
  Edt_estado.DataSource := FUCadClientes.FDTS_Aux;
  Edt_estado.DataField := 'NOME_ESTADO';
+ CMB_cidades.ListSource := FUCadClientes.FDtsCidades;
+ CMB_Estado.ListSource := FUCadClientes.FDtsEstados;
 end;
 
 procedure TFrmcadClientes.Rgb_FiltroClick(Sender: TObject);
 begin
-  if Rgb_Filtro.ItemIndex = 0 then
-  begin
-    btn_filtrar.Enabled := False;
-    Gb_periodo.Enabled := False;
-    Gb_Cidades.Enabled := False;
-    Gb_Estados.Enabled := False;
-  end;
-  if Rgb_Filtro.ItemIndex = 1 then
-  begin
-    btn_filtrar.Enabled := True;
-    Gb_periodo.Enabled := True;
-    Gb_Cidades.Enabled := False;
-    Gb_Estados.Enabled := False;
-  end;
-  if Rgb_Filtro.ItemIndex = 2 then
-  begin
-    btn_filtrar.Enabled := True;
-    Gb_periodo.Enabled := False;
-    Gb_Cidades.Enabled := True;
-    Gb_Estados.Enabled := False;
-  end;
-  if Rgb_Filtro.ItemIndex = 3 then
-  begin
-    btn_filtrar.Enabled := True;
-    Gb_periodo.Enabled := False;
-    Gb_Cidades.Enabled := False;
-    Gb_Estados.Enabled := True;
-  end;
+
+ case Rgb_Filtro.ItemIndex of
+   0:
+    begin
+      btn_filtrar.Enabled := False;
+      Gb_periodo.Enabled := False;
+      Gb_Cidades.Enabled := False;
+      Gb_Estados.Enabled := False;
+      CMB_cidades.KeyValue := -1;
+      CMB_Estado.KeyValue := -1;
+      if FUCadClientes.FOpcaoFiltro > 0 then
+      begin
+        FUCadClientes.FOpcaoFiltro := 0;
+        FUCadClientes.AplicarFiltros;
+      end;
+    end;
+   1:
+    begin
+      btn_filtrar.Enabled := True;
+      Gb_periodo.Enabled := True;
+      Gb_Cidades.Enabled := False;
+      Gb_Estados.Enabled := False;
+      CMB_cidades.KeyValue := -1;
+      CMB_Estado.KeyValue := -1;
+    end;
+   2:
+    begin
+      btn_filtrar.Enabled := True;
+      Gb_periodo.Enabled := False;
+      Gb_Cidades.Enabled := True;
+      Gb_Estados.Enabled := False;
+      CMB_Estado.KeyValue := -1;
+    end;
+   3:
+    begin
+      btn_filtrar.Enabled := True;
+      Gb_periodo.Enabled := False;
+      Gb_Cidades.Enabled := False;
+      Gb_Estados.Enabled := True;
+      CMB_cidades.KeyValue := -1;
+    end;
+ end;
 end;
 
 function TFrmcadClientes.ValidarDados: Boolean;

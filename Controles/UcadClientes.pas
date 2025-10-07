@@ -35,20 +35,63 @@ type
       FqueryAux : TFDQuery;
       FCDS_Aux: TClientDataSet;
       FDTS_Aux : TDataSource;
+      FqueryCidades : TFDQuery;
+      FDtsCidades : TDataSource;
+      FqueryEstados : TFDQuery;
+      FDtsEstados : TDataSource;
+      FOpcaoFiltro: Integer;
+      FDataNascIni: TDate;
+      FDataNascFin: TDate;
+      FIdCidade: integer;
+      FIdEstado: Integer;
       Endereco_Cliente: TEndereco_Cliente;
       constructor Create;
       procedure CarregarDadosClientes;
+      procedure CarregarCidades;
+      procedure CarregarEstados;
       procedure RetornarDadosDoCliente(IdCliente:integer);
       procedure Persistencia(RegistroNovo: Boolean);
       procedure Excluir;
       function BuscarCEP(CEP:String): Boolean;
       function ObterNomeCidade(Id: String): String;
+      procedure AplicarFiltros;
   end;
 
 implementation
 
 
 { TcadClientes }
+
+procedure TcadClientes.AplicarFiltros;
+begin
+  case FOpcaoFiltro of
+    0:
+    begin
+      FqueryClientes.Filtered := False;
+      FqueryClientes.Filter := '';
+    end;
+    1:
+    begin
+      FqueryClientes.Filtered := False;
+      FqueryClientes.Filter := ' DATANASCIMENTO BETWEEN '+ QuotedStr(FormatDateTime('dd/mm/yyyy', FDataNascIni ))+' AND '+
+                                 QuotedStr(FormatDateTime('dd/mm/yyyy', FDataNascFin));
+      FqueryClientes.Filtered := True;
+    end;
+    2:
+    begin
+      FqueryClientes.Filtered := False;
+      FqueryClientes.Filter := ' CIDADE = '+ IntToStr(FIdCidade);
+      FqueryClientes.Filtered := True;
+    end;
+    3:
+    begin
+      FqueryClientes.Filtered := False;
+      FqueryClientes.Filter := ' ID_ESTADO = '+ IntToStr(FIdEstado);
+      FqueryClientes.Filtered := True;
+    end;
+  end;
+
+end;
 
 function TcadClientes.BuscarCEP(CEP:String): Boolean;
 var
@@ -85,6 +128,14 @@ begin
   end;
 end;
 
+procedure TcadClientes.CarregarCidades;
+begin
+  FqueryCidades.close;
+  FqueryCidades.sql.Clear;
+  FqueryCidades.sql.Add('SELECT ID, NOME FROM CIDADE ORDER BY NOME');
+  FqueryCidades.Open;
+end;
+
 procedure TcadClientes.CarregarDadosClientes;
 begin
   FqueryClientes.Close;
@@ -101,6 +152,7 @@ begin
   FqueryClientes.sql.Add('     CL.CIDADE,              ');
   FqueryClientes.sql.Add('     CI.NOME AS NOME_CIDADE, ');
   FqueryClientes.sql.Add('     ES.NOME AS NOME_ESTADO, ');
+  FqueryClientes.sql.Add('     ES.ID AS ID_ESTADO,     ');
   FqueryClientes.sql.Add('     CL.DATANASCIMENTO,      ');
   FqueryClientes.sql.Add('     ''  '' AS UF            ');
   FqueryClientes.sql.Add(' FROM                        ');
@@ -112,6 +164,14 @@ begin
   FqueryClientes.sql.Add(' ORDER BY CL.NOME            ');
 
   FqueryClientes.Open;
+end;
+
+procedure TcadClientes.CarregarEstados;
+begin
+  FqueryEstados.Close;
+  FqueryEstados.sql.Clear;
+  FqueryEstados.SQL.Add('SELECT ID, NOME FROM ESTADO');
+  FqueryEstados.Open;
 end;
 
 constructor TcadClientes.Create;
@@ -129,6 +189,14 @@ begin
      Conexao.CarregarParemtrosDeConexao;
      FqueryClientes.Connection := Conexao.Connection;
      FDataSourceCliente.DataSet := FqueryClientes;
+     FqueryCidades := TFDQuery.Create(nil);
+     FDtsCidades := TDataSource.Create(nil);
+     FqueryCidades.Connection := Conexao.Connection;
+     FDtsCidades.DataSet := FqueryCidades;
+     FqueryEstados := TFDQuery.Create(nil);
+     FDtsEstados := TDataSource.Create(nil);
+     FqueryEstados.Connection := Conexao.Connection;
+     FDtsEstados.DataSet := FqueryEstados;
    finally
      FreeAndNil(Conexao);
    end;
@@ -147,6 +215,8 @@ begin
   end;
 
 end;
+
+
 function TcadClientes.ExecutarSQL(Sql: String): Boolean;
 begin
   Result := False;

@@ -1,4 +1,4 @@
-unit Principal;
+ï»¿unit Principal;
 
 interface
 
@@ -7,13 +7,11 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, cxGeometry, dxFramedControl, dxPanel, Vcl.Menus,
   cxContainer, cxEdit, cxLabel, cxCheckBox, cxCustomListBox, cxCheckListBox,
-  Vcl.ComCtrls, Vcl.ExtCtrls,DfmCadClientes, Vcl.StdCtrls, Uconexao;
+  Vcl.ComCtrls, Vcl.ExtCtrls,DfmCadClientes, DfmRelClientes ,Vcl.StdCtrls, Uconexao;
 
 type
   TFrmprincipal = class(TForm)
     MainMenu1: TMainMenu;
-    qssqsq1: TMenuItem;
-    dddddd1: TMenuItem;
     Cadastro1: TMenuItem;
     Clientes1: TMenuItem;
     Relatrio1: TMenuItem;
@@ -22,9 +20,9 @@ type
     Sobre1: TMenuItem;
     Sair1: TMenuItem;
     StatusBar1: TStatusBar;
-    procedure Sair1Click(Sender: TObject);
     procedure Clientes1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure RelatriosdeClientes1Click(Sender: TObject);
   private
     { Private declarations }
     Fconexao: Tconecxao;
@@ -48,27 +46,28 @@ var
   frmcadclientes: TFrmCadClientes;
   i: Integer;
 begin
-  // 1. Tenta encontrar uma instância já aberta do formulário de clientes.
+  // 1. Tenta encontrar uma instï¿½ncia jï¿½ aberta do formulï¿½rio de clientes.
   frmcadclientes := nil;
   for i := 0 to MDIChildCount - 1 do
   begin
-    // Verifica se o formulário na lista de filhos MDI é do tipo TFrmCadCliente
+    // Verifica se o formulï¿½rio na lista de filhos MDI ï¿½ do tipo TFrmCadCliente
     if MDIChildren[i] is TFrmCadClientes then
     begin
-      frmcadclientes := TFrmCadClientes(MDIChildren[i]); // Se for, armazena a referência
-      break; // Para a busca, pois já encontrou
+      frmcadclientes := TFrmCadClientes(MDIChildren[i]); // Se for, armazena a referï¿½ncia
+      break; // Para a busca, pois jï¿½ encontrou
     end;
   end;
 
-  // 2. Se não encontrou (frmcadcliente ainda é nil), cria uma nova instância.
+  // 2. Se nï¿½o encontrou (frmcadcliente ainda ï¿½ nil), cria uma nova instï¿½ncia.
   if frmcadclientes = nil then
   begin
     frmcadclientes := TFrmCadClientes.Create(Application);
   end
   else
-  // 3. Se encontrou uma instância existente, apenas a traz para a frente.
+  // 3. Se encontrou uma instï¿½ncia existente, apenas a traz para a frente.
   begin
-    frmcadclientes.BringToFront;       Application.ExeName
+    frmcadclientes.BringToFront;
+    Application.ExeName
   end;
 end;
 
@@ -77,9 +76,34 @@ begin
   Fconexao := Tconecxao.Create;
 end;
 
-procedure TFrmprincipal.Sair1Click(Sender: TObject);
+procedure TFrmprincipal.RelatriosdeClientes1Click(Sender: TObject);
+var
+  frmrelclientes: TFrmrelClientes;
+  i: Integer;
 begin
-  Frmprincipal.Close;
+  // 1. Tenta encontrar uma instÃ¢ncia jÃ¡ aberta do formulÃ¡rio de relatÃ³rios.
+  frmrelclientes := nil;
+  for i := 0 to MDIChildCount - 1 do
+  begin
+    // Verifica se o formulÃ¡rio na lista de filhos MDI Ã© do tipo TFrmrelClientes
+    if MDIChildren[i] is TFrmrelClientes then
+    begin
+      frmrelclientes := TFrmrelClientes(MDIChildren[i]); // Se for, armazena a referÃªncia
+      break; // Para a busca, pois jÃ¡ encontrou
+    end;
+  end;
+
+  // 2. Se nÃ£o encontrou (frmrelclientes ainda Ã© nil), cria uma nova instÃ¢ncia.
+  if frmrelclientes = nil then
+  begin
+    frmrelclientes := TFrmrelClientes.Create(Application);
+  end
+  else
+  // 3. Se encontrou uma instÃ¢ncia existente, apenas a traz para a frente.
+  begin
+    frmrelclientes.BringToFront;
+  end;
+
 end;
 
 end.

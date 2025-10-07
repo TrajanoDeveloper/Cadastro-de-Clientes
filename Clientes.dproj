@@ -131,14 +131,18 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Controles\UcadClientes.pas"/>
-        <DCCReference Include="Apresentação\DfmCadClientes.pas">
-            <Form>FrmcadClientes</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="InfraData\Uconexao.pas"/>
         <DCCReference Include="Funcoes\UValidacoes.pas"/>
         <DCCReference Include="Funcoes\UViaCEP.pas"/>
         <DCCReference Include="Funcoes\UFuncionalidades.pas"/>
+        <DCCReference Include="Apresentação\DfmRelClientes.pas">
+            <Form>FrmrelClientes</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Apresentação\DfmCadClientes.pas">
+            <Form>FrmcadClientes</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

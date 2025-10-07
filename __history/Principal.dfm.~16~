@@ -1,0 +1,58 @@
+object Frmprincipal: TFrmprincipal
+  Left = 0
+  Top = 0
+  Caption = 'Sistema de Cadastro de Clientes'
+  ClientHeight = 743
+  ClientWidth = 1156
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  FormStyle = fsMDIForm
+  Menu = MainMenu1
+  Position = poMainFormCenter
+  OnCreate = FormCreate
+  TextHeight = 15
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 724
+    Width = 1156
+    Height = 19
+    Panels = <>
+  end
+  object MainMenu1: TMainMenu
+    Left = 976
+    Top = 584
+    object qssqsq1: TMenuItem
+      Caption = '&Sistema'
+      object dddddd1: TMenuItem
+        Caption = '&configurar Conex'#227'o'
+      end
+    end
+    object Cadastro1: TMenuItem
+      Caption = 'Cadastro'
+      object Clientes1: TMenuItem
+        Caption = 'C&lientes'
+        OnClick = Clientes1Click
+      end
+    end
+    object Relatrio1: TMenuItem
+      Caption = 'Relat'#243'rios'
+      object RelatriosdeClientes1: TMenuItem
+        Caption = '&Relat'#243'rios de Clientes'
+      end
+    end
+    object Ajuda1: TMenuItem
+      Caption = 'Ajuda'
+      object Sobre1: TMenuItem
+        Caption = '&Sobre'
+      end
+    end
+    object Sair1: TMenuItem
+      Caption = 'Sair'
+      OnClick = Sair1Click
+    end
+  end
+end
