@@ -20,7 +20,10 @@ object Frmprincipal: TFrmprincipal
     Top = 724
     Width = 1156
     Height = 19
-    Panels = <>
+    Panels = <
+      item
+        Width = 50
+      end>
   end
   object MainMenu1: TMainMenu
     Left = 976
@@ -43,10 +46,17 @@ object Frmprincipal: TFrmprincipal
       Caption = 'Ajuda'
       object Sobre1: TMenuItem
         Caption = '&Sobre'
+        OnClick = Sobre1Click
       end
     end
     object Sair1: TMenuItem
       Caption = 'Sair'
+      OnClick = Sair1Click
     end
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 816
+    Top = 208
   end
 end

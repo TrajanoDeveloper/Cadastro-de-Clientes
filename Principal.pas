@@ -20,9 +20,13 @@ type
     Sobre1: TMenuItem;
     Sair1: TMenuItem;
     StatusBar1: TStatusBar;
+    Timer1: TTimer;
     procedure Clientes1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure RelatriosdeClientes1Click(Sender: TObject);
+    procedure Sair1Click(Sender: TObject);
+    procedure Sobre1Click(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
   private
     { Private declarations }
     Fconexao: Tconecxao;
@@ -104,6 +108,21 @@ begin
     frmrelclientes.BringToFront;
   end;
 
+end;
+
+procedure TFrmprincipal.Sair1Click(Sender: TObject);
+begin
+  Application.Terminate;
+end;
+
+procedure TFrmprincipal.Sobre1Click(Sender: TObject);
+begin
+  MessageDlg('Sistema de Cadastro e Controle de Clientes '+#10#13+' Versão 1.0 '+#10#13+' Desenvolvido em Delphi por Alexandre Trajano', TMsgDlgType.mtInformation,[TMsgDlgBtn.mbOK],0);
+end;
+
+procedure TFrmprincipal.Timer1Timer(Sender: TObject);
+begin
+  StatusBar1.Panels[0].Text := 'Sistema de Cadastro e Controle de Clientes' +' - '+ DateTimeToStr(now);
 end;
 
 end.
