@@ -39,6 +39,11 @@ Sistema desktop desenvolvido em **Delphi/Pascal** para gerenciamento completo de
 
 <img width="881" height="1222" alt="image" src="https://github.com/user-attachments/assets/161b5cf6-05dd-4a2a-9bcb-32032f8c104c" />
 
+🖼 Visão Geral so Sistema
+
+<img width="2196" height="922" alt="image" src="https://github.com/user-attachments/assets/fd9ebeb3-c61b-4d73-88bb-b8a4819285c3" />
+
+
 
 
 ## 🔧 Requisitos do Sistema
