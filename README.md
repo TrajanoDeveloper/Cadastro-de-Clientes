@@ -184,10 +184,9 @@ Este projeto está licenciado sob a **MIT License**.
 **Resumo:**
 - ✅ Uso comercial e privado permitido
 - ✅ Modificação e distribuição permitidas
-- ❌ Sem garantias ou responsabilidades
 
 ---
 
-**Versão:** 1.0.0 | **Atualização:** Dezembro 2024 | **Compatibilidade:** Delphi 10.3+ / Firebird 3.0+
+**Versão:** 1.0.0 | **Atualização:** Outubro 2025 | **Compatibilidade:** Delphi 12+ / Firebird 3.0+
 
 *Desenvolvido com ❤️ em Delphi/Pascal*
