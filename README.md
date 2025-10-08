@@ -205,14 +205,7 @@ isql -user SYSDBA -password masterkey localhost:caminho\CLIENTES.FDB
 # Copiar fbclient.dll para pasta da aplicação
 # Ou adicionar pasta Firebird ao PATH do sistema
 ```
-
-## 📄 Licença
-
-Este projeto está licenciado sob a **MIT License**.
-
-**Resumo:**
-- ✅ Uso comercial e privado permitido
-- ✅ Modificação e distribuição permitidas
+⭐ Se este projeto foi útil para você, considere dar uma estrela no repositório! ⭐
 
 ---
 
