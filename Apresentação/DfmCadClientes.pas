@@ -264,6 +264,7 @@ begin
   PageControl.TabIndex := 0;
   FUCadClientes.RetornarDadosDoCliente(GrdClientes.DataSource.DataSet.FieldByName('ID').AsInteger);
   HabilitarBotoes(todos);
+  HabilitarCampos(True);
 end;
 
 procedure TFrmcadClientes.HabilitarBotoes(HabilitaBotao: THabilitaBotoes);
